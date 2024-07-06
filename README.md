@@ -30,3 +30,34 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## データベース
+### テーブル構成
+- `tables`
+  - `User`：ユーザテーブル
+    - `id`：ID
+    - `name`：名前
+    - `email`：Emailアドレス
+    - `image`：画像ファイルのパス
+  - `Account`：ユーザーのアカウント情報
+    - `id`：ID
+    - `userId`：アカウントのユーザID
+    - `type`：アカウントの種類
+    - `refresh_token`：リフレッシュトークン
+    - `access_token`：アクセストークン
+    - `expired_at`：有効期限
+    - `token_type`：トークンの種類
+    - `scope`：アクセストークンのスコープ
+    - `id_token`：IDトークン
+    - `session_state`：セッションの状態
+  - `Session`
+    - `id`：ID
+    - `userId`：現在セッションしているユーザID
+    - `sessionToken`：セッショントークン
+    - `expires`：有効期限
+  - `Post`
+    - `id`
+    - `userId`：投稿ユーザのID
+    - `title`：タイトル
+    - `description`：説明
+    - `date`：投稿日
