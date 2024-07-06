@@ -1505,6 +1505,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@prisma/client@npm:5.16.1":
+  version: 5.16.1
+  resolution: "@prisma/client@npm:5.16.1"
+  peerDependencies:
+    prisma: "*"
+  peerDependenciesMeta:
+    prisma:
+      optional: true
+  checksum: 10c0/4d1e140db1e0654564c9864d7b9e9f3dafe0794c7f86d6d7d9e25c51158f855f22d6e4c5e2ff13a15e3171b3bf9c9a8d3306bdd96f26dc8c87b3501e42a9d7ab
+  languageName: node
+  linkType: hard
+
 "@prisma/debug@npm:5.16.1":
   version: 5.16.1
   resolution: "@prisma/debug@npm:5.16.1"
@@ -4619,6 +4631,7 @@ __metadata:
     "@chakra-ui/next-js": "npm:^2.2.0"
     "@chakra-ui/react": "npm:^2.8.2"
     "@next-auth/prisma-adapter": "npm:^1.0.7"
+    "@prisma/client": "npm:5.16.1"
     "@types/node": "npm:^20"
     "@types/react": "npm:^18"
     "@types/react-dom": "npm:^18"
