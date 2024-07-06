@@ -12,6 +12,9 @@ const Header = async() => {
         <Link href="/">
           top page
         </Link>
+        <Link href="/post/new">
+          post
+        </Link>
         {session?.user ? <SignOut /> : <SignIn />}
       </HStack>
     </Box>

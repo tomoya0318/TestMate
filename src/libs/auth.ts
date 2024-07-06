@@ -42,6 +42,12 @@ export const config: NextAuthConfig = {
         image: user.image,
       };
     },
+    async session({session, token}){
+      if (token && typeof token.id === "string") {
+        session.user.id = token.id;
+      }
+      return session;
+    }
   }
 };
 
