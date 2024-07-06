@@ -1,7 +1,6 @@
 import React, { ReactNode } from "react";
 import Header from "@/components/layouts/header";
-import { Providers } from "@/components/layouts/providers";
-import { SessionProvider } from "next-auth/react";
+import { ChakraProvider } from "@chakra-ui/react";
 
 type LayoutProps = {
   children: ReactNode;
@@ -12,10 +11,10 @@ export const RootLayout: React.FC<LayoutProps> = ({ children }) => {
     <>
       <html lang="ja">
         <body>
-          <Providers>
+          <ChakraProvider>
             <Header />
             {children}
-          </Providers>
+          </ChakraProvider>
         </body>
       </html>
     </>
