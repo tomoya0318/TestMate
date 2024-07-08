@@ -1,5 +1,6 @@
 export type PostProps = {
-  userId: string,
+  id: number,
   title: string | undefined,
-  description: string | undefined
+  description: string | undefined,
+  userId: string
 }

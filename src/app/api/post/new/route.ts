@@ -4,7 +4,7 @@ import { prisma } from "@/libs/server";
 // POST新規作成用API
 export const POST = async (req: Request) => {
   try {
-    const { userId, title, description } = await req.json();
+    const { title, description, userId } = await req.json();
 
     if (!userId || !title || !description) {
       return NextResponse.json({ message: 'Missing fields' }, { status: 400 });
@@ -12,9 +12,9 @@ export const POST = async (req: Request) => {
 
     const post = await prisma.post.create({
       data: {
-        userId,
         title,
         description,
+        userId
       },
     });
 

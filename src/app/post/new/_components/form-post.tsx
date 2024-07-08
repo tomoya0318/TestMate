@@ -43,7 +43,7 @@ export const FormPost: React.FC = () => {
       });
       return;
     }
-    
+
     const newErrors: { title?: string; description?: string } = {};
     if (!title) newErrors.title = "タイトルは必須です";
     if (!description) newErrors.description = "説明は必須です";
@@ -54,7 +54,7 @@ export const FormPost: React.FC = () => {
     }
 
     try {
-      await addPost({userId, title, description});
+      await addPost({ title, description, userId });
       toast({
         title: "投稿に成功しました",
         status: "success",
