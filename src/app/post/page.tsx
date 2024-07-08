@@ -1,4 +1,3 @@
-'use client';
 import { getAllPost } from "@/api/get-all-post";
 import { PostProps } from "@/types/post";
 const Postpage = async() => {
