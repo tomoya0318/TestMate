@@ -1,5 +1,12 @@
 import { Link, Box, VStack, Text } from '@chakra-ui/react';
 
+const commonStyles = {
+  fontFamily: "Noto Sans JP",
+  fontWeight: "bold",
+  lineHeght: 1,
+  alignItems: "center",
+}
+
 const NotFound = () => {
   return (
     <VStack
@@ -7,31 +14,29 @@ const NotFound = () => {
       alignItems="center"
     >
       <Box 
-        fontSize="128px"
-        fontWeight="bold"
-        fontFamily="Noto Sans JP"
-        color="#0DCEDA"
-        lineHeight={1}
-        alignItems="center"
+        sx={{
+          ...commonStyles,
+          fontSize: "128px",
+          color: "#0DCEDA"
+        }}
       >
         404
       </Box>
       <Box
-        fontSize="40px"
-        fontWeight="bold" 
-        fontFamily="Noto Sans JP"
-        color="#000000"
-        lineHeight={1}
-        alignItems="center"
+        sx={{
+          ...commonStyles,
+          fontSize: "40px",
+          color: "#000000"
+        }}
       >
         お探しのページは見つかりません
       </Box>
       <Link
-        fontSize="24"
-        color="#0DCEDA"
-        fontWeight="bold"
-        fontFamily="Noto Sans JP"
-        alignItems="center"
+        sx={{
+          ...commonStyles,
+          fontSize: "24px",
+          color: "#0DCEDA",
+        }}
         href="/"
       >
         ホームに戻る
