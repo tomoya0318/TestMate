@@ -17,7 +17,7 @@ const Postpage = async() => {
         <Container key={post.id}>
           <HStack spacing={4}>
             <Box boxSize="100px">
-              <Image src='https://kotonohaworks.com/free-icons/wp-content/uploads/kkrn_icon_user_14.png' boxSize="100px" />
+              <Image src='https://kotonohaworks.com/free-icons/wp-content/uploads/kkrn_icon_user_14.png' alt="app icon" />
             </Box>
             <Box fontSize="xl" fontWeight="bold">{post.title}</Box>
           </HStack>
