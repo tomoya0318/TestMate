@@ -12,12 +12,12 @@ export const RootLayout: React.FC<LayoutProps> = ({ children }) => {
     <>
       <html lang="ja">
         <body>
-        <SessionProvider>
-          <ChakraProvider>
-            <Header />
-            {children}
-          </ChakraProvider>
-        </SessionProvider>
+          <SessionProvider>
+            <ChakraProvider>
+              <Header />
+              {children}
+            </ChakraProvider>
+          </SessionProvider>
         </body>
       </html>
     </>

@@ -1,6 +1,6 @@
 import { auth } from "@/libs/auth";
 
-const Home = async() => {
+const Home = async () => {
   const session = await auth();
   return (
     <>

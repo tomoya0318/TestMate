@@ -7,6 +7,6 @@ export const GET = async () => {
     const posts = await prisma.post.findMany();
     return NextResponse.json(posts);
   } catch (err) {
-    return NextResponse.json({ messege: 'Error', err }, { status: 500 });
+    return NextResponse.json({ messege: "Error", err }, { status: 500 });
   }
 };

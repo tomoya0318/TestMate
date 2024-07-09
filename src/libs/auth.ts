@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import { NextAuthConfig } from "next-auth";
 import Google from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { prisma } from './server';
+import { prisma } from "./server";
 
 export const config: NextAuthConfig = {
   theme: {
@@ -42,13 +42,13 @@ export const config: NextAuthConfig = {
         image: user.image,
       };
     },
-    async session({session, token}){
+    async session({ session, token }) {
       if (token && typeof token.id === "string") {
         session.user.id = token.id;
       }
       return session;
-    }
-  }
+    },
+  },
 };
 
 export const { handlers, auth, signIn, signOut } = NextAuth(config);

@@ -14,21 +14,18 @@ import {
   useToast,
 } from "@chakra-ui/react";
 
-
-
-
 export const FormPost: React.FC = () => {
   const router = useRouter();
   const toast = useToast();
   const { data: session } = useSession();
-  const userId = session?.user?.id
+  const userId = session?.user?.id;
   const titleRef = useRef<HTMLInputElement | null>(null);
   const descriptionRef = useRef<HTMLTextAreaElement | null>(null);
   const [errors, setErrors] = useState<{
     title?: string;
     description?: string;
   }>({});
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const title = titleRef.current?.value;

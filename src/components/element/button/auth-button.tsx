@@ -6,9 +6,7 @@ import { Button } from "@chakra-ui/react";
 export const SignIn: React.FC = () => {
   return (
     <form action={signInAction}>
-      < Button type="submit">
-        サインイン
-      </Button>
+      <Button type="submit">サインイン</Button>
     </form>
   );
 };
@@ -16,9 +14,7 @@ export const SignIn: React.FC = () => {
 export const SignOut: React.FC = () => {
   return (
     <form action={signOutAction}>
-      < Button type="submit">
-        サインアウト
-      </Button>
+      <Button type="submit">サインアウト</Button>
     </form>
   );
 };
