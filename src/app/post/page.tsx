@@ -6,13 +6,13 @@ import { Box, Container, HStack, VStack, Image } from "@chakra-ui/react";
 const Postpage = async () => {
   const posts: PostProps[] = await getAllPost();
   return (
-    <Container bg="#0DCEDA" mt={10}>
+    <Container  bg="#0DCEDA" mt={10} p={10}>
       <VStack align="stretch" spacing={4}>
-        <Container fontSize={40} textAlign="center">
+        <Container fontSize={40} textAlign="center" >
           Post
         </Container>
         {posts.map((post: PostProps) => (
-          <Container key={post.id} bg="#EBFFFA">
+          <Container key={post.id} bg="#EBFFFA" border="1px" borderColor="gray.200">
             <Link href={`/post/${post.id}`}>
               <HStack spacing={4}>
                 <Box boxSize="100px">
