@@ -1,0 +1,17 @@
+version: '3.9'
+
+volumes:
+  node_modules:
+  next:
+
+services:
+  node:
+    build:
+      context: .
+    container_name: testmate
+    ports:
+      - 3010:3010  # ホストの3010ポートをコンテナの3000ポートにマッピング
+    volumes:
+      - .:/works
+      - node_modules:/works/node_modules
+      - next:/works/.next
