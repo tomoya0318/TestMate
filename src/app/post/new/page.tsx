@@ -1,6 +1,7 @@
 import React from "react";
-import { FormPost } from "./_components/form-post";
 import { SessionProvider } from "next-auth/react";
+import dynamic from "next/dynamic";
+const FormPost = dynamic(() => import("./_components/form-post"))
 
 const PostNewPage: React.FC = async () => {
   return (

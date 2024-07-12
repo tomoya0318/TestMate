@@ -14,7 +14,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 
-export const FormPost: React.FC = () => {
+const FormPost: React.FC = () => {
   const router = useRouter();
   const toast = useToast();
   const { data: session } = useSession();
@@ -91,3 +91,5 @@ export const FormPost: React.FC = () => {
     </form>
   );
 };
+
+export default FormPost;
