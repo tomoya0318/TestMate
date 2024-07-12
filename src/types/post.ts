@@ -7,7 +7,7 @@ export type PostProps = {
 };
 
 export type LikeProps = {
-  id: string,
-  userId: string,
-  postId: string
-}
+  id: string;
+  userId: string;
+  postId: string;
+};

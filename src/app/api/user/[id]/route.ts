@@ -15,9 +15,9 @@ export const PUT = async (req: Request) => {
       data: {
         name,
         image,
-        introduce
+        introduce,
       },
-      where: { id }
+      where: { id },
     });
 
     return NextResponse.json(users);
@@ -30,7 +30,7 @@ export const PUT = async (req: Request) => {
 
     return NextResponse.json(
       { message: "Error", error: errorMessage },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };

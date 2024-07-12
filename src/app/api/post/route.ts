@@ -53,7 +53,7 @@ export const POST = async (req: Request) => {
       return NextResponse.json(like, { status: 201 });
     }
   } catch (err) {
-    console.error('Error creating/removing like:', err);
+    console.error("Error creating/removing like:", err);
 
     // エラーメッセージの取得
     let errorMessage = "Unknown error";
@@ -63,7 +63,7 @@ export const POST = async (req: Request) => {
 
     return NextResponse.json(
       { message: "Error", error: errorMessage },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };
