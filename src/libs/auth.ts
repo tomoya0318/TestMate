@@ -17,16 +17,7 @@ export const config: NextAuthConfig = {
   basePath: "/api/auth",
   adapter: PrismaAdapter(prisma),
   callbacks: {
-    async authorized({ request, auth }) {
-      try {
-        const { pathname } = request.nextUrl;
-        if (pathname === "/protected-page") return !!auth;
-        return true;
-      } catch (err) {
-        console.log(err);
-      }
-    },
-    async jwt({ token, trigger }) {
+    async jwt({ token }) {
       if (!token.email) return token;
 
       const user = await prisma.user.findFirst({

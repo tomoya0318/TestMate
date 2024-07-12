@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { addPost } from "@/api/add-post";

@@ -1,5 +1,5 @@
 import { PostProps } from "@/types/post";
-type PartialPostProps = Omit<PostProps, "id">;
+type PartialPostProps = Omit<PostProps, "id" | "likes">;
 export const addPost = async ({
   title,
   description,
