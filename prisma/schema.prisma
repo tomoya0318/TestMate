@@ -73,7 +73,7 @@ model Like {
   @@map("likes")
 }
 
-model Tag {
+model Tags {
   id    String      @id @default(cuid())
   name  String      @unique
   posts PostTags[]
@@ -83,7 +83,7 @@ model Tag {
 model PostTags {
   post   Post  @relation(fields: [postId], references: [id])
   postId String
-  tag    Tag   @relation(fields: [tagId], references: [id])
+  tag    Tags   @relation(fields: [tagId], references: [id])
   tagId  String
 
   @@id([postId, tagId])
