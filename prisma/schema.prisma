@@ -14,10 +14,12 @@ model User {
   name          String?
   email         String          @unique
   emailVerified DateTime?
+  introduce     String?
   image         String?
   accounts      Account[]
   post          Post[]
   sessions      Session[]
+  likes         Like[]
 }
 
 model Account {
@@ -40,12 +42,14 @@ model Account {
 }
 
 model Post {
-  id          Int     @id @default(autoincrement())
+  id          String       @id @default(cuid())
   title       String
   description String
   date        DateTime @default(now())
   userId      String
   user        User     @relation(fields: [userId], references: [id])
+  likes Like[]
+  tags  PostTags[]
   @@index([userId])
 }
 
@@ -55,7 +59,32 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Like {
+  user    User       @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  userId  String     @map("user_id") 
+  post    Post       @relation(fields: [postId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  postId  String        @map("post_id") 
+  createdAt DateTime @map("created_at") @default(now())
+  @@id([userId, postId])
+  @@map("likes")
+}
+
+model Tag {
+  id    String      @id @default(cuid())
+  name  String      @unique
+  posts PostTags[]
+}
+
+
+model PostTags {
+  post   Post  @relation(fields: [postId], references: [id])
+  postId String
+  tag    Tag   @relation(fields: [tagId], references: [id])
+  tagId  String
+
+  @@id([postId, tagId])
 }
