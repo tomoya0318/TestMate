@@ -1,35 +1,29 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
+以下のコマンドを順に実行(docker使用)
+```
+make build
+```
+```
+make up
 ```
 
 Open [http://localhost:3010](http://localhost:3010) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## 各ファイルの役割
+```
+.  
+├── prisma: DB作成用
+├── public: 静的画像保管用
+└── src/
+    ├── aciton: server action用の関数
+    ├── api: apiを叩くためのfetch関数
+    ├── app: ページ部分
+    ├── components: 全体的なコンポーネント
+    ├── libs: ライブラリ用
+    └── types: typescriptの型宣言用
+```
 
 ## データベース
 ### テーブル構成
@@ -38,6 +32,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
     - `id`：ID
     - `name`：名前
     - `email`：Emailアドレス
+    - `emailVerified`：Emailの認証確認
+    - `introduce`：自己紹介文
     - `image`：画像ファイルのパス
   - `Account`：ユーザーのアカウント情報
     - `id`：ID
@@ -56,8 +52,18 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
     - `sessionToken`：セッショントークン
     - `expires`：有効期限
   - `Post`
-    - `id`
+    - `id`：ID
     - `userId`：投稿ユーザのID
     - `title`：タイトル
     - `description`：説明
     - `date`：投稿日
+  - `Like`
+    - `userId`:押した人のユーザID
+    - `postId`:押したpostのID
+    - `createdAt`：お気に入りした時間
+  - `Tags`
+    - `id`：ID
+    - `name`：タグの名前
+  - `PostTags`
+    - `postId`：タグがつけられた postのID
+    - `tagId`：タグに付けられているID
