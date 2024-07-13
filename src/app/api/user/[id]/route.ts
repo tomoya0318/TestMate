@@ -58,9 +58,3 @@ export const PUT = async (req: Request) => {
     );
   }
 };
-
-export const config = {
-  api: {
-    bodyParser: true,
-  },
-};

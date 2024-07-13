@@ -7,6 +7,7 @@ export type CommentProps = {
 
 export type CommentAndUserImageProps = CommentProps & {
   user: {
+    id: string,
     image: string
   }
 }

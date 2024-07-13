@@ -1,5 +1,7 @@
+'use client';
 import { useState } from 'react';
-import { Box, Button, Textarea, VStack } from '@chakra-ui/react';
+import { useRouter } from 'next/navigation';
+import { Box, Button, Textarea, VStack, useToast } from '@chakra-ui/react';
 import { addComment } from '@/api/add-comment';
 
 type AddCommentFormProps = {
@@ -11,6 +13,8 @@ export const AddCommentForm: React.FC<AddCommentFormProps> = ({ postId, userId }
   const [content, setContent] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
+  const toast = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,12 +24,28 @@ export const AddCommentForm: React.FC<AddCommentFormProps> = ({ postId, userId }
     try {
       await addComment({ content, postId, userId });
       setContent(''); // Clear the content after successful submission
+      toast({
+        title: "コメントが投稿されました。",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      });
+      setTimeout(() => {
+        router.push('/');
+      }, 2000); // Redirect after 2 seconds
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
       } else {
         setError('An unexpected error occurred');
       }
+      toast({
+        title: "エラーが発生しました。",
+        description: error,
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -40,7 +60,6 @@ export const AddCommentForm: React.FC<AddCommentFormProps> = ({ postId, userId }
           placeholder="コメントを入力してください"
           required
         />
-        {error && <Box color="red.500">{error}</Box>}
         <Button
           type="submit"
           colorScheme="teal"
