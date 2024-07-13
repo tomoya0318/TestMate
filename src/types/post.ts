@@ -1,7 +1,12 @@
 export type PostProps = {
   id: string;
-  title: string | undefined;
-  description: string | undefined;
+  title: string;
+  short: string;
+  description: string;
+  iconUrl: string;
+  screenshots: string[];
+  groupUrl: string;
+  storeUrl: string;
   userId: string;
   likes: LikeProps[];
 };
