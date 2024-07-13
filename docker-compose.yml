@@ -1,16 +1,15 @@
 version: '3.9'
+
 volumes:
-  node_modules:
   next:
+
 services:
-  project-null:
+  node:
     build:
       context: .
-    tty: true
     container_name: testmate
     ports:
       - 3010:3010
     volumes:
-      - ./app:/works
-      - node_modules:/works/node_modules
+      - .:/works
       - next:/works/.next
