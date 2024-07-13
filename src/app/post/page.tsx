@@ -31,8 +31,6 @@ const Postpage = () => {
         if (session && session.user?.id) {
           const liked = await checkLike(post.id, session.user.id);
           likedPostsData[post.id] = liked;
-        } else {
-          likedPostsData[post.id] = false; // 初期状態ではすべて未いいねとする
         }
       }
       setLikeCounts(likeCountsData);
