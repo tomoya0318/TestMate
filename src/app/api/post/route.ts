@@ -6,14 +6,20 @@ export type TagProps = {
   category?: string,
   status?: string
 };
-
 //ポストの全記事取得
-export const GET = async (req: Request) => {
+export const GET = async () => {
   try {
-    const { searchParams } = new URL(req.url);
-    const appType = searchParams.get("appType");
-    const category = searchParams.get("category");
-    const status = searchParams.get("status");
+    const posts = await prisma.post.findMany();
+    return NextResponse.json(posts);
+  } catch (err) {
+    return NextResponse.json({ messege: "Error", err }, { status: 500 });
+  }
+};
+
+// ポストのタグが一致した記事取得
+export const POST = async (req: Request) => {
+  try {
+    const { appType, category, status }: TagProps = await req.json();
 
     let posts;
     if (appType || category || status) {
@@ -33,16 +39,9 @@ export const GET = async (req: Request) => {
           tags: true,
         },
       });
-    } else {
-      posts = await prisma.post.findMany({
-        include: {
-          tags: true,
-        },
-      });
     }
-
     return NextResponse.json(posts);
-  } catch (err) {
+  } catch (err){
     return NextResponse.json({ message: "Error", err }, { status: 500 });
   }
-};
+}

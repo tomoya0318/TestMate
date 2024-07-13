@@ -3,7 +3,7 @@ import { getAllPost } from "@/api/get-all-post";
 import { PostProps } from "@/types/post";
 import Link from "next/link";
 import { Box, Container, HStack, VStack, Image, Select, Button } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LikeButton from "./_components/like-button";
 
 const Postpage = () => {
@@ -12,9 +12,26 @@ const Postpage = () => {
   const [category, setCategory] = useState<string>("");
   const [status, setStatus] = useState<string>("");
 
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const allPosts: PostProps[] = await getAllPost();
+        setPosts(allPosts);
+      } catch (error) {
+        console.error("Failed to fetch posts:", error);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+
   const handleSearch = async () => {
-    const postsData: PostProps[] = await getAllPost(appType, category, status);
-    setPosts(postsData);
+    try {
+      const postsData: PostProps[] = await getAllPost(appType, category, status);
+      setPosts(postsData);
+    } catch (error) {
+      console.error("Failed to search posts:", error);
+    }
   };
 
   const appTypes = ["アプリ", "ゲーム"];

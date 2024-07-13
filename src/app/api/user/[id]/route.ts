@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/libs/server";
 import { UserProps } from "@/types/user";
 
+// //user情報取得用API
+// export const GET = 
 // user情報編集用API
 export const PUT = async (req: Request) => {
   try {
