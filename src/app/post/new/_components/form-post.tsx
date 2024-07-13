@@ -35,6 +35,12 @@ const FormPost: React.FC = () => {
   const [category, setCategory] = useState("");
   const [status, setStatus] = useState<string>("");
 
+  const categories = [
+    "アクション", "アドベンチャー", "アーケード", "カード", "シミュレーション", "スポーツ",
+    "パズル", "パチンコ＆麻雀、ほか", "ボード", "ミニゲーム", "レース", "ロールプレイング",
+    "単語", "戦略", "教育", "雑学", "音楽＆リズム"
+  ];
+  
   const [errors, setErrors] = useState<{
     title?: string;
     short?: string;
@@ -184,11 +190,16 @@ const FormPost: React.FC = () => {
       </FormControl>
       <FormControl isInvalid={!!errors.category} mt={4}>
         <FormLabel>カテゴリ</FormLabel>
-        <Select placeholder="選択してください" onChange={(e) => setCategory(e.target.value)}>
-          <option value="category1">カテゴリー1</option>
-          <option value="category2">カテゴリー2</option>
-          <option value="category3">カテゴリー3</option>
-        </Select>
+          <Select
+            placeholder="カテゴリ"
+            onChange={(e) => setCategory(e.target.value)}
+            bg="white"
+            size="lg"
+          >
+            {categories.map(category => (
+              <option key={category} value={category}>{category}</option>
+            ))}
+          </Select>
         {errors.category && <FormErrorMessage>{errors.category}</FormErrorMessage>}
       </FormControl>
       <FormControl isInvalid={!!errors.status} mt={4}>
