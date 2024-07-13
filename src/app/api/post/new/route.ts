@@ -43,15 +43,6 @@ export const POST = async (req: Request) => {
 
     return NextResponse.json(post);
   } catch (err) {
-    // エラーオブジェクトが`unknown`型であるため、型ガードを使用してエラーメッセージを取り出す
-    let errorMessage = "Unknown error";
-    if (err instanceof Error) {
-      errorMessage = err.message;
-    }
-
-    return NextResponse.json(
-      { message: "Error", error: errorMessage },
-      { status: 500 },
-    );
+    return NextResponse.json({ messege: 'Error', err }, { status: 500 });
   }
 };

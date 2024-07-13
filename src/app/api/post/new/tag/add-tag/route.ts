@@ -29,11 +29,7 @@ export const POST = async (req: Request) => {
     });
 
     return NextResponse.json(postTag);
-  } catch (error) {
-    console.error("Error fetching like status:", error);
-    return NextResponse.json(
-      { message: "Internal server error" },
-      { status: 500 },
-    );
+  } catch (err) {
+    return NextResponse.json({ messege: 'Error', err }, { status: 500 });
   }
 };
