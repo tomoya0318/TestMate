@@ -3,7 +3,7 @@ import { Link, Box, VStack, Text } from "@chakra-ui/react";
 const commonStyles = {
   fontFamily: "Noto Sans JP",
   fontWeight: "bold",
-  lineHeght: 1,
+  lineHeight: 1,
   alignItems: "center",
 };
 
