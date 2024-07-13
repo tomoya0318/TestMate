@@ -16,7 +16,6 @@ const CommentButton: React.FC<CommentButtonProps> = ({ postId }) => {
     const fetchCommentData = async () => {
       if (session && session.user?.id) {
         const count = await countComment(postId);
-        console.log(count);
         setcommentCount(count);
       }
     };
