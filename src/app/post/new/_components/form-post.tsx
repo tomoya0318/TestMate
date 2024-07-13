@@ -178,7 +178,7 @@ const FormPost: React.FC = () => {
           )}
         </FormControl>
         <FormControl isInvalid={!!errors.iconUrl}>
-          <FormLabel>アプリのアイコン（512 x 512 ピクセル）</FormLabel>
+          <FormLabel>アプリのアイコン</FormLabel>
           <ImageUploadButton
             label="ファイルを選択"
             onUpload={(url) => setIconUrl(url || "")}
