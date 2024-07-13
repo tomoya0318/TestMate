@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '@/libs/server';
 import { UserProps } from '@/types/user';
 
-export default async function routeHandler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
     return handleGet(req, res);
   } else if (req.method === 'PUT') {
