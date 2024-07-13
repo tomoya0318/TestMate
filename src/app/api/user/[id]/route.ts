@@ -1,11 +1,21 @@
-import { NextResponse } from "next/server";
-import { prisma } from "@/libs/server";
-import { UserProps } from "@/types/user";
+import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from 'next/server';
+import { prisma } from '@/libs/server';
+import { UserProps } from '@/types/user';
 
-//userの情報取得
-export const GET = async (req: Request) => {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method === 'GET') {
+    return handleGet(req, res);
+  } else if (req.method === 'PUT') {
+    return handlePut(req, res);
+  } else {
+    return NextResponse.json({ message: "Method not allowed" }, { status: 405 });
+  }
+}
+
+async function handleGet(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const url = new URL(req.url);
+    const url = new URL(req.url || '', 'http://localhost:3000');
     const id = url.pathname.split("/user/")[1];
 
     const user = await prisma.user.findUnique({
@@ -14,39 +24,38 @@ export const GET = async (req: Request) => {
       },
     });
 
-    // ユーザー情報が存在しない場合のエラーハンドリング
     if (!user) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
+
     return NextResponse.json(user);
   } catch (err) {
     return NextResponse.json({ message: "Error", err }, { status: 500 });
   }
-};
+}
 
-// user情報編集用API
-export const PUT = async (req: Request) => {
-  const url = new URL(req.url);
+async function handlePut(req: NextApiRequest, res: NextApiResponse) {
+  const url = new URL(req.url || '', 'http://localhost:3000');
   const id = url.pathname.split("/user/")[1];
+  
   try {
-    const { name, introduce, image }: UserProps = await req.json();
+    const { name, introduce, image }: UserProps = req.body;
 
     if (!id || !name) {
       return NextResponse.json({ message: "Missing fields" }, { status: 400 });
     }
 
-    const users = await prisma.user.update({
+    const updatedUser = await prisma.user.update({
+      where: { id },
       data: {
         name,
         image,
         introduce,
       },
-      where: { id },
     });
 
-    return NextResponse.json(users);
+    return NextResponse.json(updatedUser);
   } catch (err) {
-    // エラーオブジェクトが`unknown`型であるため、型ガードを使用してエラーメッセージを取り出す
     let errorMessage = "Unknown error";
     if (err instanceof Error) {
       errorMessage = err.message;
@@ -57,4 +66,4 @@ export const PUT = async (req: Request) => {
       { status: 500 },
     );
   }
-};
+}
