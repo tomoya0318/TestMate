@@ -42,12 +42,17 @@ model Account {
 }
 
 model Post {
-  id          String       @id @default(cuid())
-  title       String
-  description String
-  date        DateTime @default(now())
-  userId      String
-  user        User     @relation(fields: [userId], references: [id])
+  id             String       @id @default(cuid())
+  title          String
+  short          String
+  description    String
+  iconUrl        String
+  screenshots    String[]
+  groupUrl       String
+  storeUrl       String
+  date           DateTime @default(now())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id])
   likes Like[]
   tags  PostTags[]
   @@index([userId])
@@ -74,9 +79,11 @@ model Like {
 }
 
 model Tags {
-  id    String      @id @default(cuid())
-  name  String      @unique
-  posts PostTags[]
+  id          String      @id @default(cuid())
+  posts       PostTags[]
+  appType     String      
+  categories  String[]    
+  status      String      
 }
 
 

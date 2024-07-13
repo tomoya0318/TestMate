@@ -8,7 +8,8 @@ const PostDescription = async ({ params }: { params: { id: string } }) => {
     <Flex justifyContent="center" alignItems="center">
       <Box w="100%" maxW="600px" textAlign="center">
         <Heading mb={4}>{post.title}</Heading>
-        <Text>{post.description}</Text>
+        <Text>{post.short}</Text>
+        <></>
         {/* <Button onClick={handleAttend}>テスターに参加する</Button> */}
       </Box>
     </Flex>
