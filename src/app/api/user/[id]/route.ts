@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { NextResponse } from 'next/server';
 import { prisma } from '@/libs/server';
 import { UserProps } from '@/types/user';
 
@@ -9,14 +8,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   } else if (req.method === 'PUT') {
     return handlePut(req, res);
   } else {
-    return NextResponse.json({ message: "Method not allowed" }, { status: 405 });
+    return res.status(405).json({ message: "Method not allowed" });
   }
 }
 
 async function handleGet(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const url = new URL(req.url || '', 'http://localhost:3000');
-    const id = url.pathname.split("/user/")[1];
+    const url = req.url ? new URL(req.url, 'http://localhost:3000') : null;
+    const id = url?.pathname.split("/user/")[1];
 
     const user = await prisma.user.findUnique({
       where: {
@@ -25,24 +24,24 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse) {
     });
 
     if (!user) {
-      return NextResponse.json({ message: "User not found" }, { status: 404 });
+      return res.status(404).json({ message: "User not found" });
     }
 
-    return NextResponse.json(user);
+    return res.status(200).json(user);
   } catch (err) {
-    return NextResponse.json({ message: "Error", err }, { status: 500 });
+    return res.status(500).json({ message: "Error", err });
   }
 }
 
 async function handlePut(req: NextApiRequest, res: NextApiResponse) {
-  const url = new URL(req.url || '', 'http://localhost:3000');
-  const id = url.pathname.split("/user/")[1];
+  const url = req.url ? new URL(req.url, 'http://localhost:3000') : null;
+  const id = url?.pathname.split("/user/")[1];
   
   try {
     const { name, introduce, image }: UserProps = req.body;
 
     if (!id || !name) {
-      return NextResponse.json({ message: "Missing fields" }, { status: 400 });
+      return res.status(400).json({ message: "Missing fields" });
     }
 
     const updatedUser = await prisma.user.update({
@@ -54,16 +53,13 @@ async function handlePut(req: NextApiRequest, res: NextApiResponse) {
       },
     });
 
-    return NextResponse.json(updatedUser);
+    return res.status(200).json(updatedUser);
   } catch (err) {
     let errorMessage = "Unknown error";
     if (err instanceof Error) {
       errorMessage = err.message;
     }
 
-    return NextResponse.json(
-      { message: "Error", error: errorMessage },
-      { status: 500 },
-    );
+    return res.status(500).json({ message: "Error", error: errorMessage });
   }
 }
