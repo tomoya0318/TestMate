@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Box, Container, HStack, VStack, Image, Select, Button } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import LikeButton from "./_components/like-button";
+import CommentButton from "./_components/comment-button";
 
 const Postpage = () => {
   const [posts, setPosts] = useState<PostProps[]>([]);
@@ -100,6 +101,9 @@ const Postpage = () => {
                 </Box>
                 <Box fontSize="md" color="gray.500">
                   <LikeButton postId={post.id} />
+                </Box>
+                <Box fontSize="md" color="gray.500">
+                  <CommentButton postId={post.id} />
                 </Box>
               </HStack>
             </Link>
