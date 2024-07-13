@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import React, { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -36,9 +36,23 @@ const FormPost: React.FC = () => {
   const [status, setStatus] = useState<string>("");
 
   const categories = [
-    "アクション", "アドベンチャー", "アーケード", "カード", "シミュレーション", "スポーツ",
-    "パズル", "パチンコ＆麻雀、ほか", "ボード", "ミニゲーム", "レース", "ロールプレイング",
-    "単語", "戦略", "教育", "雑学", "音楽＆リズム"
+    "アクション",
+    "アドベンチャー",
+    "アーケード",
+    "カード",
+    "シミュレーション",
+    "スポーツ",
+    "パズル",
+    "パチンコ＆麻雀、ほか",
+    "ボード",
+    "ミニゲーム",
+    "レース",
+    "ロールプレイング",
+    "単語",
+    "戦略",
+    "教育",
+    "雑学",
+    "音楽＆リズム",
   ];
 
   const [errors, setErrors] = useState<{
@@ -88,7 +102,8 @@ const FormPost: React.FC = () => {
     if (!short) newErrors.short = "簡単な説明は必須です";
     if (!description) newErrors.description = "詳細は必須です";
     if (!iconUrl) newErrors.iconUrl = "アイコンURLは必須です";
-    if (screenshots.length === 0) newErrors.screenshots = "スクリーンショットは必須です";
+    if (screenshots.length === 0)
+      newErrors.screenshots = "スクリーンショットは必須です";
     if (!appType) newErrors.appType = "アプリ種別は必須です";
     if (!category) newErrors.category = "カテゴリは必須です";
     if (!status) newErrors.status = "公開状況は必須です";
@@ -149,9 +164,7 @@ const FormPost: React.FC = () => {
       <FormControl isInvalid={!!errors.short} mt={4}>
         <FormLabel>簡単な説明</FormLabel>
         <Textarea ref={shortRef} />
-        {errors.short && (
-          <FormErrorMessage>{errors.short}</FormErrorMessage>
-        )}
+        {errors.short && <FormErrorMessage>{errors.short}</FormErrorMessage>}
       </FormControl>
       <FormControl isInvalid={!!errors.description} mt={4}>
         <FormLabel>詳細</FormLabel>
@@ -162,12 +175,20 @@ const FormPost: React.FC = () => {
       </FormControl>
       <FormControl isInvalid={!!errors.iconUrl} mt={4}>
         <FormLabel>アイコンURL</FormLabel>
-        <ImageUploadButton label="アイコンをアップロード" onUpload={(url) => setIconUrl(url || "")} />
-        {errors.iconUrl && <FormErrorMessage>{errors.iconUrl}</FormErrorMessage>}
+        <ImageUploadButton
+          label="アイコンをアップロード"
+          onUpload={(url) => setIconUrl(url || "")}
+        />
+        {errors.iconUrl && (
+          <FormErrorMessage>{errors.iconUrl}</FormErrorMessage>
+        )}
       </FormControl>
       <FormControl isInvalid={!!errors.screenshots} mt={4}>
         <FormLabel>スクリーンショット</FormLabel>
-        <ImageUploadButton label="スクリーンショットをアップロード" onUpload={(url) => setScreenshots([...screenshots, url])} />
+        <ImageUploadButton
+          label="スクリーンショットをアップロード"
+          onUpload={(url) => setScreenshots([...screenshots, url])}
+        />
         {errors.screenshots && (
           <FormErrorMessage>{errors.screenshots}</FormErrorMessage>
         )}
@@ -177,43 +198,49 @@ const FormPost: React.FC = () => {
         <Box>
           <CustomCheckbox
             label="アプリ"
-            checked={appType === 'アプリ'}
-            onChange={(checked) => setAppType(checked ? 'アプリ' : '')}
+            checked={appType === "アプリ"}
+            onChange={(checked) => setAppType(checked ? "アプリ" : "")}
           />
           <CustomCheckbox
             label="ゲーム"
-            checked={appType === 'ゲーム'}
-            onChange={(checked) => setAppType(checked ? 'ゲーム' : '')}
+            checked={appType === "ゲーム"}
+            onChange={(checked) => setAppType(checked ? "ゲーム" : "")}
           />
         </Box>
-        {errors.appType && <FormErrorMessage>{errors.appType}</FormErrorMessage>}
+        {errors.appType && (
+          <FormErrorMessage>{errors.appType}</FormErrorMessage>
+        )}
       </FormControl>
       <FormControl isInvalid={!!errors.category} mt={4}>
         <FormLabel>カテゴリ</FormLabel>
-          <Select
-            placeholder="カテゴリ"
-            onChange={(e) => setCategory(e.target.value)}
-            bg="white"
-            size="lg"
-          >
-            {categories.map(category => (
-              <option key={category} value={category}>{category}</option>
-            ))}
-          </Select>
-        {errors.category && <FormErrorMessage>{errors.category}</FormErrorMessage>}
+        <Select
+          placeholder="カテゴリ"
+          onChange={(e) => setCategory(e.target.value)}
+          bg="white"
+          size="lg"
+        >
+          {categories.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </Select>
+        {errors.category && (
+          <FormErrorMessage>{errors.category}</FormErrorMessage>
+        )}
       </FormControl>
       <FormControl isInvalid={!!errors.status} mt={4}>
         <FormLabel>公開状況</FormLabel>
         <Box>
           <CustomCheckbox
             label="テスター募集"
-            checked={status === 'テスター募集'}
-            onChange={(checked) => setStatus(checked ? 'テスター募集' : '')}
+            checked={status === "テスター募集"}
+            onChange={(checked) => setStatus(checked ? "テスター募集" : "")}
           />
           <CustomCheckbox
             label="リリース済み"
-            checked={status === 'リリース済み'}
-            onChange={(checked) => setStatus(checked ? 'リリース済み' : '')}
+            checked={status === "リリース済み"}
+            onChange={(checked) => setStatus(checked ? "リリース済み" : "")}
           />
         </Box>
         {errors.status && <FormErrorMessage>{errors.status}</FormErrorMessage>}
@@ -228,7 +255,9 @@ const FormPost: React.FC = () => {
       <FormControl isInvalid={!!errors.storeUrl} mt={4}>
         <FormLabel>ストアURL</FormLabel>
         <Input ref={storeUrlRef} type="text" />
-        {errors.storeUrl && <FormErrorMessage>{errors.storeUrl}</FormErrorMessage>}
+        {errors.storeUrl && (
+          <FormErrorMessage>{errors.storeUrl}</FormErrorMessage>
+        )}
       </FormControl>
       <Button type="submit" mt={4}>
         投稿

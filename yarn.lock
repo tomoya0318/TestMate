@@ -1808,15 +1808,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@prisma/client@npm:5.16.1":
-  version: 5.16.1
-  resolution: "@prisma/client@npm:5.16.1"
+"@prisma/client@npm:5.16.2":
+  version: 5.16.2
+  resolution: "@prisma/client@npm:5.16.2"
   peerDependencies:
     prisma: "*"
   peerDependenciesMeta:
     prisma:
       optional: true
-  checksum: 10c0/4d1e140db1e0654564c9864d7b9e9f3dafe0794c7f86d6d7d9e25c51158f855f22d6e4c5e2ff13a15e3171b3bf9c9a8d3306bdd96f26dc8c87b3501e42a9d7ab
+  checksum: 10c0/4aefff22a3ad5ac3a7b6298c41949e4962b328a13d9f9e9095b530ce3ad931a1052716450d464850f240e6fa109b6db5719a9cf0f868e75ad44c39ad2409f2df
   languageName: node
   linkType: hard
 
@@ -4537,7 +4537,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prisma@npm:^5.16.1":
+"prisma@npm:^5.16.2":
   version: 5.16.2
   resolution: "prisma@npm:5.16.2"
   dependencies:
@@ -5167,7 +5167,7 @@ __metadata:
     "@emotion/react": "npm:^11.11.4"
     "@emotion/styled": "npm:^11.11.5"
     "@next-auth/prisma-adapter": "npm:^1.0.7"
-    "@prisma/client": "npm:5.16.1"
+    "@prisma/client": "npm:5.16.2"
     "@types/file-saver": "npm:^2"
     "@types/node": "npm:^20"
     "@types/react": "npm:^18"
@@ -5179,7 +5179,7 @@ __metadata:
     next: "npm:14.2.4"
     next-auth: "npm:^5.0.0-beta.19"
     prettier: "npm:^3.3.2"
-    prisma: "npm:^5.16.1"
+    prisma: "npm:^5.16.2"
     react: "npm:^18"
     react-dom: "npm:^18"
     react-icons: "npm:^5.2.1"

@@ -2,6 +2,7 @@ import { UserProps } from "@/types/user";
 export const getSingleUser = async (id: string): Promise<UserProps> => {
   const baseUrl =
     process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3010";
+  console.log(id);
   const res = await fetch(`${baseUrl}/api/user/${id}`);
 
   if (!res.ok) {

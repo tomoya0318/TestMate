@@ -28,7 +28,10 @@ export const POST = async (req: Request) => {
       return NextResponse.json(false);
     }
   } catch (error) {
-    console.error('Error fetching like status:', error);
-    return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
+    console.error("Error fetching like status:", error);
+    return NextResponse.json(
+      { message: "Internal server error" },
+      { status: 500 },
+    );
   }
 };

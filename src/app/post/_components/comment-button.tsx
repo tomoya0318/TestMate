@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { IconButton, HStack, Text } from "@chakra-ui/react";
 import { countComment } from "@/api/count-comment";
 import { useSession, signIn } from "next-auth/react";
-import { FaRegComment } from 'react-icons/fa';
+import { FaRegComment } from "react-icons/fa";
 
 type CommentButtonProps = {
   postId: string;
-}
+};
 
 const CommentButton: React.FC<CommentButtonProps> = ({ postId }) => {
   const { data: session } = useSession();
@@ -32,7 +32,6 @@ const CommentButton: React.FC<CommentButtonProps> = ({ postId }) => {
       signIn(); // サインインしていない場合はサインイン画面にリダイレクト
       return;
     } else {
-
     }
   };
 

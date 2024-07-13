@@ -5,15 +5,24 @@ import { auth } from "@/libs/auth";
 
 const Footer = async () => {
   const session = await auth();
-return (
+  return (
     <Box w="100%" h={200} bg="gray.100" p={4} mt={10} boxShadow="md">
-        <Center>
-            <Text style={{ fontWeight: 'bold', whiteSpace: 'nowrap', fontSize: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    Testmate
-            </Text>
-        </Center>
+      <Center>
+        <Text
+          style={{
+            fontWeight: "bold",
+            whiteSpace: "nowrap",
+            fontSize: "50px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          Testmate
+        </Text>
+      </Center>
     </Box>
-);
+  );
 };
 
 export default Footer;

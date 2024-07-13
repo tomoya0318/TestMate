@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import React, { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { getSingleUser } from "@/api/get-single-user";
@@ -17,7 +17,7 @@ import {
 import { UserProps } from "@/types/user";
 import { FaPlusCircle } from "react-icons/fa";
 
-const UserPage = ({params}: {params: {id:string}}) => {
+const UserPage = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
   const toast = useToast();
   const [user, setUser] = useState<UserProps | null>(null);
@@ -97,7 +97,7 @@ const UserPage = ({params}: {params: {id:string}}) => {
             <Image
               borderRadius="full"
               boxSize="150px"
-              src={user.image || '/default-profile.png'}
+              src={user.image || "/default-profile.png"}
               alt="Profile Image"
             />
             <IconButton
@@ -120,19 +120,21 @@ const UserPage = ({params}: {params: {id:string}}) => {
         </Box>
         <FormControl mb={4}>
           <FormLabel>ニックネーム</FormLabel>
-          <Input 
-            value={user.name || ''}
+          <Input
+            value={user.name || ""}
             onChange={(e) => setUser({ ...user, name: e.target.value })}
           />
         </FormControl>
         <FormControl mb={4}>
           <FormLabel>自己紹介（200文字以内）</FormLabel>
-          <Textarea 
-            value={user.introduce || ''}
+          <Textarea
+            value={user.introduce || ""}
             onChange={(e) => setUser({ ...user, introduce: e.target.value })}
           />
         </FormControl>
-        <Button type="submit" colorScheme="teal">保存</Button>
+        <Button type="submit" colorScheme="teal">
+          保存
+        </Button>
       </form>
     </Box>
   );

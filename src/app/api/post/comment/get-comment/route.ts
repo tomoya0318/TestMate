@@ -6,7 +6,10 @@ export const POST = async (req: Request) => {
     const { postId } = await req.json();
 
     if (!postId) {
-      return NextResponse.json({ message: 'Post ID is required' }, { status: 400 });
+      return NextResponse.json(
+        { message: "Post ID is required" },
+        { status: 400 },
+      );
     }
 
     const comments = await prisma.comment.findMany({
@@ -29,7 +32,7 @@ export const POST = async (req: Request) => {
 
     return NextResponse.json(
       { message: "Error", error: errorMessage },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };

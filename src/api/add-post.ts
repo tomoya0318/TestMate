@@ -10,7 +10,16 @@ export const addPost = async ({
   storeUrl,
   userId,
 }: PartialPostProps) => {
-  if (!title || !short || !description || !iconUrl || !screenshots || !groupUrl || !storeUrl || !userId) {
+  if (
+    !title ||
+    !short ||
+    !description ||
+    !iconUrl ||
+    !screenshots ||
+    !groupUrl ||
+    !storeUrl ||
+    !userId
+  ) {
     throw new Error("All fields must be provided");
   }
   const baseUrl =

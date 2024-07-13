@@ -6,7 +6,10 @@ export const POST = async (req: Request) => {
     const { postId } = await req.json();
 
     if (!postId) {
-      return NextResponse.json({ message: 'Post ID is required' }, { status: 400 });
+      return NextResponse.json(
+        { message: "Post ID is required" },
+        { status: 400 },
+      );
     }
 
     const commentCount = await prisma.comment.count({
@@ -17,7 +20,10 @@ export const POST = async (req: Request) => {
 
     return NextResponse.json({ commentCount });
   } catch (error) {
-    console.error('Error fetching like count:', error);
-    return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
+    console.error("Error fetching like count:", error);
+    return NextResponse.json(
+      { message: "Internal server error" },
+      { status: 500 },
+    );
   }
 };

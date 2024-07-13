@@ -1,16 +1,19 @@
-'use client';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Box, Button, Textarea, VStack, useToast } from '@chakra-ui/react';
-import { addComment } from '@/api/add-comment';
+"use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Box, Button, Textarea, VStack, useToast } from "@chakra-ui/react";
+import { addComment } from "@/api/add-comment";
 
 type AddCommentFormProps = {
   postId: string;
   userId: string;
-}
+};
 
-export const AddCommentForm: React.FC<AddCommentFormProps> = ({ postId, userId }) => {
-  const [content, setContent] = useState('');
+export const AddCommentForm: React.FC<AddCommentFormProps> = ({
+  postId,
+  userId,
+}) => {
+  const [content, setContent] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
@@ -23,7 +26,7 @@ export const AddCommentForm: React.FC<AddCommentFormProps> = ({ postId, userId }
 
     try {
       await addComment({ content, postId, userId });
-      setContent(''); // Clear the content after successful submission
+      setContent(""); // Clear the content after successful submission
       toast({
         title: "コメントが投稿されました。",
         status: "success",
@@ -31,13 +34,13 @@ export const AddCommentForm: React.FC<AddCommentFormProps> = ({ postId, userId }
         isClosable: true,
       });
       setTimeout(() => {
-        router.push('/');
+        router.push("/");
       }, 2000); // Redirect after 2 seconds
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
       } else {
-        setError('An unexpected error occurred');
+        setError("An unexpected error occurred");
       }
       toast({
         title: "エラーが発生しました。",
@@ -60,11 +63,7 @@ export const AddCommentForm: React.FC<AddCommentFormProps> = ({ postId, userId }
           placeholder="コメントを入力してください"
           required
         />
-        <Button
-          type="submit"
-          colorScheme="teal"
-          isLoading={isSubmitting}
-        >
+        <Button type="submit" colorScheme="teal" isLoading={isSubmitting}>
           コメントを投稿
         </Button>
       </VStack>

@@ -7,7 +7,10 @@ type ImageUploadButtonProps = {
   onUpload: (url: string) => void;
 };
 
-export const ImageUploadButton: React.FC<ImageUploadButtonProps> = ({ label, onUpload }) => {
+export const ImageUploadButton: React.FC<ImageUploadButtonProps> = ({
+  label,
+  onUpload,
+}) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 

@@ -1,8 +1,16 @@
-'use client';
+"use client";
 import { getAllPost } from "@/api/get-all-post";
 import { PostProps } from "@/types/post";
 import Link from "next/link";
-import { Box, Container, HStack, VStack, Image, Select, Button } from "@chakra-ui/react";
+import {
+  Box,
+  Container,
+  HStack,
+  VStack,
+  Image,
+  Select,
+  Button,
+} from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import LikeButton from "./_components/like-button";
 import CommentButton from "./_components/comment-button";
@@ -28,7 +36,11 @@ const Postpage = () => {
 
   const handleSearch = async () => {
     try {
-      const postsData: PostProps[] = await getAllPost(appType, category, status);
+      const postsData: PostProps[] = await getAllPost(
+        appType,
+        category,
+        status,
+      );
       setPosts(postsData);
     } catch (error) {
       console.error("Failed to search posts:", error);
@@ -37,9 +49,23 @@ const Postpage = () => {
 
   const appTypes = ["アプリ", "ゲーム"];
   const categories = [
-    "アクション", "アドベンチャー", "アーケード", "カード", "シミュレーション", "スポーツ",
-    "パズル", "パチンコ＆麻雀、ほか", "ボード", "ミニゲーム", "レース", "ロールプレイング",
-    "単語", "戦略", "教育", "雑学", "音楽＆リズム"
+    "アクション",
+    "アドベンチャー",
+    "アーケード",
+    "カード",
+    "シミュレーション",
+    "スポーツ",
+    "パズル",
+    "パチンコ＆麻雀、ほか",
+    "ボード",
+    "ミニゲーム",
+    "レース",
+    "ロールプレイング",
+    "単語",
+    "戦略",
+    "教育",
+    "雑学",
+    "音楽＆リズム",
   ];
   const statuses = ["テスト中", "リリース済み"];
 
@@ -56,8 +82,10 @@ const Postpage = () => {
             bg="white"
             size="lg"
           >
-            {appTypes.map(type => (
-              <option key={type} value={type}>{type}</option>
+            {appTypes.map((type) => (
+              <option key={type} value={type}>
+                {type}
+              </option>
             ))}
           </Select>
           <Select
@@ -66,8 +94,10 @@ const Postpage = () => {
             bg="white"
             size="lg"
           >
-            {categories.map(category => (
-              <option key={category} value={category}>{category}</option>
+            {categories.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
             ))}
           </Select>
           <Select
@@ -76,8 +106,10 @@ const Postpage = () => {
             bg="white"
             size="lg"
           >
-            {statuses.map(status => (
-              <option key={status} value={status}>{status}</option>
+            {statuses.map((status) => (
+              <option key={status} value={status}>
+                {status}
+              </option>
             ))}
           </Select>
           <Button onClick={handleSearch} colorScheme="teal" size="lg">

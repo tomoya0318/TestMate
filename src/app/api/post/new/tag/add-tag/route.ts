@@ -7,7 +7,7 @@ export const POST = async (req: Request) => {
     const { appType, category, status, postId } = await req.json();
 
     // postIdとuserIdが存在することを確認
-    if (!appType || !category || !status || !postId ) {
+    if (!appType || !category || !status || !postId) {
       return NextResponse.json({ message: "Missing fields" }, { status: 400 });
     }
 
@@ -30,7 +30,10 @@ export const POST = async (req: Request) => {
 
     return NextResponse.json(postTag);
   } catch (error) {
-    console.error('Error fetching like status:', error);
-    return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
+    console.error("Error fetching like status:", error);
+    return NextResponse.json(
+      { message: "Internal server error" },
+      { status: 500 },
+    );
   }
 };
