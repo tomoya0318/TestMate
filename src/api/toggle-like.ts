@@ -2,7 +2,7 @@ export async function toggleLike(postId: string, userId: string) {
   try {
     const baseUrl =
       process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3010";
-    const response = await fetch(`${baseUrl}/api/post/toggle-like`, {
+    const response = await fetch(`${baseUrl}/api/post/like/toggle-like`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

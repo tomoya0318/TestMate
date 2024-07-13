@@ -1,8 +1,9 @@
-"use client";
+'use client';
 import React, { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { addPost } from "@/api/add-post";
+import { addTag } from "@/api/add-tag";
 import {
   FormControl,
   FormLabel,
@@ -11,8 +12,11 @@ import {
   Textarea,
   Button,
   useToast,
+  Box,
+  Select,
 } from "@chakra-ui/react";
 import { ImageUploadButton } from "@/components/element/button/image-upload-button";
+import { CustomCheckbox } from "@/components/element/checkbox";
 
 const FormPost: React.FC = () => {
   const router = useRouter();
@@ -22,18 +26,31 @@ const FormPost: React.FC = () => {
   const titleRef = useRef<HTMLInputElement | null>(null);
   const shortRef = useRef<HTMLTextAreaElement | null>(null);
   const descriptionRef = useRef<HTMLTextAreaElement | null>(null);
-  const googleGroupUrlRef = useRef<HTMLInputElement | null>(null);
+  const groupUrlRef = useRef<HTMLInputElement | null>(null);
   const storeUrlRef = useRef<HTMLInputElement | null>(null);
 
   const [iconUrl, setIconUrl] = useState<string>("");
   const [screenshots, setScreenshots] = useState<string[]>([]);
+  const [appType, setAppType] = useState<string>("");
+  const [category, setCategory] = useState<string>("");
+  const [status, setStatus] = useState<string>("");
+
+  const categories = [
+    "アクション", "アドベンチャー", "アーケード", "カード", "シミュレーション", "スポーツ",
+    "パズル", "パチンコ＆麻雀、ほか", "ボード", "ミニゲーム", "レース", "ロールプレイング",
+    "単語", "戦略", "教育", "雑学", "音楽＆リズム"
+  ];
+
   const [errors, setErrors] = useState<{
     title?: string;
     short?: string;
     description?: string;
     iconUrl?: string;
     screenshots?: string;
-    googleGroupUrl?: string;
+    appType?: string;
+    category?: string;
+    status?: string;
+    groupUrl?: string;
     storeUrl?: string;
   }>({});
 
@@ -42,7 +59,7 @@ const FormPost: React.FC = () => {
     const title = titleRef.current?.value || "";
     const short = shortRef.current?.value || "";
     const description = descriptionRef.current?.value || "";
-    const googleGroupUrl = googleGroupUrlRef.current?.value || "";
+    const groupUrl = groupUrlRef.current?.value || "";
     const storeUrl = storeUrlRef.current?.value || "";
 
     if (!userId) {
@@ -61,7 +78,10 @@ const FormPost: React.FC = () => {
       description?: string;
       iconUrl?: string;
       screenshots?: string;
-      googleGroupUrl?: string;
+      appType?: string;
+      category?: string;
+      status?: string;
+      groupUrl?: string;
       storeUrl?: string;
     } = {};
     if (!title) newErrors.title = "タイトルは必須です";
@@ -69,7 +89,10 @@ const FormPost: React.FC = () => {
     if (!description) newErrors.description = "詳細は必須です";
     if (!iconUrl) newErrors.iconUrl = "アイコンURLは必須です";
     if (screenshots.length === 0) newErrors.screenshots = "スクリーンショットは必須です";
-    if (!googleGroupUrl) newErrors.googleGroupUrl = "GoogleグループURLは必須です";
+    if (!appType) newErrors.appType = "アプリ種別は必須です";
+    if (!category) newErrors.category = "カテゴリは必須です";
+    if (!status) newErrors.status = "公開状況は必須です";
+    if (!groupUrl) newErrors.groupUrl = "GoogleグループURLは必須です";
     if (!storeUrl) newErrors.storeUrl = "ストアURLは必須です";
     setErrors(newErrors);
 
@@ -78,16 +101,24 @@ const FormPost: React.FC = () => {
     }
 
     try {
-      await addPost({
+      const postResponse = await addPost({
         title,
         short,
         description,
         iconUrl,
         screenshots,
-        groupUrl: googleGroupUrl,
+        groupUrl,
         storeUrl,
         userId,
       });
+      console.log("Post response:", postResponse);
+      await addTag({
+        appType,
+        category,
+        status,
+        postId: postResponse.id, // 投稿IDを取得してタグに使用
+      });
+
       toast({
         title: "投稿に成功しました",
         status: "success",
@@ -97,6 +128,7 @@ const FormPost: React.FC = () => {
       router.push("/");
       router.refresh();
     } catch (error) {
+      console.error("Error during post submission:", error);
       toast({
         title: "投稿に失敗しました",
         description: String(error),
@@ -140,11 +172,57 @@ const FormPost: React.FC = () => {
           <FormErrorMessage>{errors.screenshots}</FormErrorMessage>
         )}
       </FormControl>
-      <FormControl isInvalid={!!errors.googleGroupUrl} mt={4}>
+      <FormControl isInvalid={!!errors.appType} mt={4}>
+        <FormLabel>アプリ種別</FormLabel>
+        <Box>
+          <CustomCheckbox
+            label="アプリ"
+            checked={appType === 'アプリ'}
+            onChange={(checked) => setAppType(checked ? 'アプリ' : '')}
+          />
+          <CustomCheckbox
+            label="ゲーム"
+            checked={appType === 'ゲーム'}
+            onChange={(checked) => setAppType(checked ? 'ゲーム' : '')}
+          />
+        </Box>
+        {errors.appType && <FormErrorMessage>{errors.appType}</FormErrorMessage>}
+      </FormControl>
+      <FormControl isInvalid={!!errors.category} mt={4}>
+        <FormLabel>カテゴリ</FormLabel>
+          <Select
+            placeholder="カテゴリ"
+            onChange={(e) => setCategory(e.target.value)}
+            bg="white"
+            size="lg"
+          >
+            {categories.map(category => (
+              <option key={category} value={category}>{category}</option>
+            ))}
+          </Select>
+        {errors.category && <FormErrorMessage>{errors.category}</FormErrorMessage>}
+      </FormControl>
+      <FormControl isInvalid={!!errors.status} mt={4}>
+        <FormLabel>公開状況</FormLabel>
+        <Box>
+          <CustomCheckbox
+            label="テスター募集"
+            checked={status === 'テスター募集'}
+            onChange={(checked) => setStatus(checked ? 'テスター募集' : '')}
+          />
+          <CustomCheckbox
+            label="リリース済み"
+            checked={status === 'リリース済み'}
+            onChange={(checked) => setStatus(checked ? 'リリース済み' : '')}
+          />
+        </Box>
+        {errors.status && <FormErrorMessage>{errors.status}</FormErrorMessage>}
+      </FormControl>
+      <FormControl isInvalid={!!errors.groupUrl} mt={4}>
         <FormLabel>GoogleグループURL</FormLabel>
-        <Input ref={googleGroupUrlRef} type="text" />
-        {errors.googleGroupUrl && (
-          <FormErrorMessage>{errors.googleGroupUrl}</FormErrorMessage>
+        <Input ref={groupUrlRef} type="text" />
+        {errors.groupUrl && (
+          <FormErrorMessage>{errors.groupUrl}</FormErrorMessage>
         )}
       </FormControl>
       <FormControl isInvalid={!!errors.storeUrl} mt={4}>
