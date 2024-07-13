@@ -17,18 +17,16 @@ const LikeButton: React.FC<LikeButtonProps> = ({ postId }) => {
 
   useEffect(() => {
     const fetchLikeData = async () => {
+      const count = await countLike(postId);
+      setLikeCount(count);
+
       if (session && session.user?.id) {
         const liked = await checkLike(postId, session.user.id);
         setIsLiked(liked);
-
-        const count = await countLike(postId);
-        setLikeCount(count);
       }
     };
 
-    if (session) {
-      fetchLikeData();
-    }
+    fetchLikeData();
   }, [session, postId]);
 
   const handleLikeClick = async (event: React.MouseEvent) => {
@@ -56,6 +54,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({ postId }) => {
         icon={isLiked ? <FaHeart color="red" /> : <FaRegHeart />}
         onClick={handleLikeClick}
         aria-label="Like"
+        isDisabled={!session}
       />
       <Text>{likeCount}</Text>
     </HStack>

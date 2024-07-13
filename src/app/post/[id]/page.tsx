@@ -18,23 +18,38 @@ import { CommentAndUserImageProps } from "@/types/comment";
 import Link from "next/link";
 import { AddCommentForm } from "./_components/add-comment-form";
 import { useSession } from "next-auth/react";
+import { getSingleUser } from "@/api/get-single-user";
+import { FaUser } from "react-icons/fa";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const PostDescription = ({ params }: { params: { id: string } }) => {
   const { data: session } = useSession();
   const [post, setPost] = useState<any>(null);
   const [comments, setComments] = useState<CommentAndUserImageProps[]>([]);
+  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
     const fetchPostAndComments = async () => {
       const postData = await getSinglePost(params.id);
       setPost(postData);
 
+      try {
+        if (session?.user?.id) {
+          const userData = await getSingleUser(session.user.id);
+          setUser(userData);
+        }
+      } catch (error) {
+        console.error("Failed to fetch user:", error);
+      }
+
       const commentsData = await getCommentsAndUserByPostId(params.id);
       setComments(commentsData);
     };
 
     fetchPostAndComments();
-  }, [params.id]);
+  }, [params.id, session]);
 
   if (!post) {
     return (
@@ -43,6 +58,15 @@ const PostDescription = ({ params }: { params: { id: string } }) => {
       </Flex>
     );
   }
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: true,
+  };
 
   return (
     <Flex justifyContent="center" alignItems="center" py={10}>
@@ -53,21 +77,50 @@ const PostDescription = ({ params }: { params: { id: string } }) => {
         p={5}
         borderWidth="1px"
         borderRadius="lg"
+        boxShadow="md"
       >
         <HStack spacing={4} justify="space-between" align="center" mb={4}>
-          <Image src={post.iconUrl} boxSize="100px" alt="icon" />
-          <VStack align="flex-start" spacing={0}>
+          <Image src={post.iconUrl} boxSize="96px" alt="icon" />
+          <VStack align="flex-start" spacing={0} flex="1">
             <Heading size="lg">{post.title}</Heading>
             <Text fontSize="sm" color="gray.500">
               {post.short}
             </Text>
           </VStack>
-          <HStack spacing={2}>
-            <CommentButton postId={post.id} />
-            <LikeButton postId={post.id} />
-          </HStack>
+          <VStack align="center">
+            <Image
+              boxSize="80px"
+              borderRadius="full"
+              src={user?.image || "/default-profile.png"}
+              alt="user image"
+            />
+            <Text>{user?.name}</Text>
+          </VStack>
         </HStack>
-        <Image src={post.screenshots} mb={4} alt="screenshots" />
+        <HStack spacing={4} mb={4} justifyContent="center">
+          <CommentButton postId={post.id} />
+          <HStack alignItems="center">
+            <FaUser />
+            <Text>44</Text> {/* ダミーデータ：必要ならばAPIから取得して表示 */}
+          </HStack>
+          <LikeButton postId={post.id} />
+        </HStack>
+        <Box mb={4}>
+          <Slider {...settings}>
+            {post.screenshots.map((screenshot: string, index: number) => (
+              <Image
+                key={index}
+                src={screenshot}
+                width="100px"
+                height="177px"
+                alt={`screenshot-${index}`}
+                objectFit="contain"
+                borderRadius="md"
+                mx="auto"
+              />
+            ))}
+          </Slider>
+        </Box>
         <Text textAlign="left" mb={4}>
           {post.description}
         </Text>
@@ -81,6 +134,7 @@ const PostDescription = ({ params }: { params: { id: string } }) => {
               color="gray.700"
               borderRadius="md"
               textAlign="center"
+              cursor="pointer"
             >
               戻る
             </Box>
@@ -94,6 +148,7 @@ const PostDescription = ({ params }: { params: { id: string } }) => {
               color="white"
               borderRadius="md"
               textAlign="center"
+              cursor="pointer"
             >
               テスターになる
             </Box>

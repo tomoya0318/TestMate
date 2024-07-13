@@ -10,20 +10,16 @@ type CommentButtonProps = {
 
 const CommentButton: React.FC<CommentButtonProps> = ({ postId }) => {
   const { data: session } = useSession();
-  const [commentCount, setcommentCount] = useState<number>(0);
+  const [commentCount, setCommentCount] = useState<number>(0);
 
   useEffect(() => {
     const fetchCommentData = async () => {
-      if (session && session.user?.id) {
-        const count = await countComment(postId);
-        setcommentCount(count);
-      }
+      const count = await countComment(postId);
+      setCommentCount(count);
     };
 
-    if (session) {
-      fetchCommentData();
-    }
-  }, [session, postId]);
+    fetchCommentData();
+  }, [postId]);
 
   const handleCommentClick = async (event: React.MouseEvent) => {
     event.stopPropagation();
@@ -32,6 +28,7 @@ const CommentButton: React.FC<CommentButtonProps> = ({ postId }) => {
       signIn(); // サインインしていない場合はサインイン画面にリダイレクト
       return;
     } else {
+      // サインイン済みのユーザーのコメントアクションのロジックを追加
     }
   };
 
@@ -40,7 +37,8 @@ const CommentButton: React.FC<CommentButtonProps> = ({ postId }) => {
       <IconButton
         icon={<FaRegComment />}
         onClick={handleCommentClick}
-        aria-label="Like"
+        aria-label="Comment"
+        isDisabled={!session} // サインインしていない場合はボタンを無効にする
       />
       <Text>{commentCount}</Text>
     </HStack>

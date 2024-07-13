@@ -37,7 +37,6 @@ export const ImageUploadButton: React.FC<ImageUploadButtonProps> = ({
         onChange={handleFileChange}
         style={{ display: "none" }}
       />
-      {previewUrl && <Image src={previewUrl} alt="Preview" />}
     </VStack>
   );
 };
