@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect, useState, useRef } from "react";
-import { useRouter, useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { getSingleUser } from "@/api/get-single-user";
 import { updateUser } from "@/api/update-user";
 import {
@@ -17,10 +17,9 @@ import {
 import { UserProps } from "@/types/user";
 import { FaPlusCircle } from "react-icons/fa";
 
-const UserPage = () => {
+const UserPage = ({params}: {params: {id:string}}) => {
   const router = useRouter();
   const toast = useToast();
-  const params = useParams();
   const [user, setUser] = useState<UserProps | null>(null);
   const inputFileRef = useRef<HTMLInputElement | null>(null);
 

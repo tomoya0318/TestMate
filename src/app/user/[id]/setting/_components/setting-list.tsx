@@ -4,7 +4,7 @@ import { SignIn, SignOut } from "@/components/element/button/auth-button";
 import { auth } from "@/libs/auth";
 
 
-const SettingList: React.FC<{ text: string ,link: string}> = ({ text, link}) => { // Add 'link' to the destructured props
+const SettingList: React.FC<{ text: string ,link: string}> = ({ text, link }) => { // Add 'link' to the destructured props
     return (
         <Link href={link} >
             <Box w={700} h={100} bg="white" p={4} mt={10} boxShadow="md" borderRadius="4" display="flex" alignItems="center">
