@@ -1,21 +1,15 @@
 "use client";
 import { getAllPost } from "@/api/get-all-post";
 import { PostProps } from "@/types/post";
-import Link from "next/link";
 import {
-  Box,
   Container,
   HStack,
-  VStack,
-  Image,
   Select,
   Button,
-  Text,
+  VStack,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import LikeButton from "./_components/like-button";
-import CommentButton from "./_components/comment-button";
-import { FaRegComment, FaUser } from "react-icons/fa";
+import PostList from '@/components/element/post/post-list';
 
 const Postpage = () => {
   const [posts, setPosts] = useState<PostProps[]>([]);
@@ -111,45 +105,7 @@ const Postpage = () => {
             検索
           </Button>
         </HStack>
-        {posts.map((post: PostProps) => (
-          <Container
-            key={post.id}
-            bg="white"
-            border="1px"
-            borderColor="gray.200"
-            borderRadius="md"
-            p={4}
-            mb={4}
-            boxShadow="md"
-          >
-            <Link href={`/post/${post.id}`}>
-              <HStack spacing={4} alignItems="center">
-                <Box boxSize="100px">
-                  <Image src={post.iconUrl} alt="app icon" borderRadius="md" />
-                </Box>
-                <VStack align="start" spacing={1} flex="1">
-                  <Text fontSize="xl" fontWeight="bold">
-                    {post.title}
-                  </Text>
-                  <Text fontSize="md" color="gray.500">
-                    {post.short}
-                  </Text>
-                  <HStack spacing={4}>
-                    <CommentButton postId={post.id} />
-                    <HStack alignItems="center">
-                      <FaUser />
-                      <Text>44</Text> {/* ダミーデータ：必要ならばAPIから取得して表示 */}
-                    </HStack>
-                    <LikeButton postId={post.id} />
-                  </HStack>
-                </VStack>
-                <Box ml="auto">
-                  <Image src="/arrow.png" alt="arrow" boxSize="24px" />
-                </Box>
-              </HStack>
-            </Link>
-          </Container>
-        ))}
+        <PostList posts={posts} />
       </VStack>
     </Container>
   );
