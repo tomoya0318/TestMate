@@ -1,12 +1,10 @@
-import { Box, HStack, Center, Text } from "@chakra-ui/react";
-import Link from "next/link";
-import { SignIn, SignOut } from "@/components/element/button/auth-button";
+import { Box, Center, Text } from "@chakra-ui/react";
 import { auth } from "@/libs/auth";
 
 const Footer = async () => {
   const session = await auth();
   return (
-    <Box w="100%" h={200} bg="gray.100" p={4} mt={10} boxShadow="md">
+    <Box as="footer" w="100%" bg="gray.100" p={4} boxShadow="md">
       <Center>
         <Text
           style={{
