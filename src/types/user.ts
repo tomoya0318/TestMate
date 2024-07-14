@@ -4,7 +4,9 @@ export type UserIdProps = {
 
 export type UserProps = {
   id: string;
-  name: string | undefined;
-  introduce: string | undefined;
-  image: string | undefined;
-};
+  name: string;
+  email: string;
+  image?: string;
+  introduce?: string;
+}
+

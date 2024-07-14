@@ -88,12 +88,15 @@ const PostDescription = ({ params }: { params: { id: string } }) => {
             </Text>
           </VStack>
           <VStack align="center">
-            <Image
-              boxSize="80px"
-              borderRadius="full"
-              src={user?.image || "/default-profile.png"}
-              alt="user image"
-            />
+            <Link href={`/user/${user?.id}/display-profile`} passHref>
+              <Image
+                boxSize="80px"
+                borderRadius="full"
+                src={user?.image || "/default-profile.png"}
+                alt="user image"
+                cursor="pointer"
+              />
+            </Link>
             <Text>{user?.name}</Text>
           </VStack>
         </HStack>
@@ -172,12 +175,15 @@ const PostDescription = ({ params }: { params: { id: string } }) => {
               align="start"
               spacing={4}
             >
-              <Image
-                boxSize="40px"
-                borderRadius="full"
-                src={comment.user.image || "/default-profile.png"}
-                alt="user image"
-              />
+              <Link href={`/user/${comment.user.id}/display-profile`} passHref>
+                <Image
+                  boxSize="40px"
+                  borderRadius="full"
+                  src={comment.user.image || "/default-profile.png"}
+                  alt="user image"
+                  cursor="pointer"
+                />
+              </Link>
               <Box>
                 <Text>{comment.content}</Text>
               </Box>
