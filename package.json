@@ -10,7 +10,7 @@
     "migrate": "prisma migrate dev",
     "db:reset": "prisma migrate reset",
     "postinstall": "prisma generate",
-    "build": "prisma generate && <actual-build-command>"
+    "build": "prisma generate && next build"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.1.1",
