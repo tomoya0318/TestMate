@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { getlikedPost } from "@/api/get-liked-posts";
 import { PostProps } from "@/types/post";
 import PostList from "@/components/element/post/post-list";
-import { Container, Flex, Text, Heading } from "@chakra-ui/react";
+import { Container, Flex, Text, Heading, Link, Box, VStack } from "@chakra-ui/react"; // Import the missing 'Link' and 'Box' components
 
 const DisplayLikedPostsPage = ({ params }: { params: { id: string } }) => {
   const [posts, setPosts] = useState<PostProps[]>([]);
@@ -37,7 +37,32 @@ const DisplayLikedPostsPage = ({ params }: { params: { id: string } }) => {
   if (error) {
     return (
       <Flex justifyContent="center" alignItems="center" height="100vh">
-        <Text>{error}</Text>
+        <VStack justifyContent="center" alignItems="center">
+          <Box
+            sx={{
+              fontSize: "40px",
+              color: "#000000",
+            }}
+          >
+            まだお気に入りが登録されていません...
+          </Box>
+          <Box
+            sx={{
+              fontSize: "40px",
+              color: "#000000",
+            }}
+          >
+          </Box>
+          <Link
+            sx={{
+              fontSize: "24px",
+              color: "#0DCEDA",
+            }}
+            href="/"
+          >
+            アプリを探しに行く
+          </Link>
+        </VStack>
       </Flex>
     );
   }
