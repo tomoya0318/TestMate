@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { getSinglePost } from "@/api/get-single-post";
 import { getCommentsAndUserByPostId } from "@/api/get-commnets-and-user-by-postId";
 import {
@@ -108,22 +108,34 @@ const PostDescription = ({ params }: { params: { id: string } }) => {
           </HStack>
           <LikeButton postId={post.id} />
         </HStack>
-        <Box mb={4}>
-          <Slider {...settings}>
-            {post.screenshots.map((screenshot: string, index: number) => (
-              <Image
-                key={index}
-                src={screenshot}
-                width="100px"
-                height="177px"
-                alt={`screenshot-${index}`}
-                objectFit="contain"
-                borderRadius="md"
-                mx="auto"
-              />
-            ))}
-          </Slider>
-        </Box>
+        {post.screenshots.length === 1 ? (
+          <Image
+            src={post.screenshots[0]}
+            width="100px"
+            height="177px"
+            alt={`screenshot-0`}
+            objectFit="contain"
+            borderRadius="md"
+            mx="auto"
+          />
+        ) : (
+          <Box mb={4}>
+            <Slider {...settings}>
+              {post.screenshots.map((screenshot: string, index: number) => (
+                <Image
+                  key={index}
+                  src={screenshot}
+                  width="100px"
+                  height="177px"
+                  alt={`screenshot-${index}`}
+                  objectFit="contain"
+                  borderRadius="md"
+                  mx="auto"
+                />
+              ))}
+            </Slider>
+          </Box>
+        )}
         <Text textAlign="left" mb={4}>
           {post.description}
         </Text>
