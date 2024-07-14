@@ -4,12 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3010",
-    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write src/",
     "migrate": "prisma migrate dev",
-    "db:reset": "prisma migrate reset"
+    "db:reset": "prisma migrate reset",
+    "postinstall": "prisma generate",
+    "build": "prisma generate && <actual-build-command>"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.1.1",
