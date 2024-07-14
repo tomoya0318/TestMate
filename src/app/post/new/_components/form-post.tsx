@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import React, { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -12,11 +12,14 @@ import {
   Textarea,
   Button,
   useToast,
-  Box,
+  Image,
   Select,
+  HStack,
+  VStack,
+  Checkbox,
+  Stack,
 } from "@chakra-ui/react";
 import { ImageUploadButton } from "@/components/element/button/image-upload-button";
-import { CustomCheckbox } from "@/components/element/checkbox";
 
 const FormPost: React.FC = () => {
   const router = useRouter();
@@ -36,9 +39,23 @@ const FormPost: React.FC = () => {
   const [status, setStatus] = useState<string>("");
 
   const categories = [
-    "アクション", "アドベンチャー", "アーケード", "カード", "シミュレーション", "スポーツ",
-    "パズル", "パチンコ＆麻雀、ほか", "ボード", "ミニゲーム", "レース", "ロールプレイング",
-    "単語", "戦略", "教育", "雑学", "音楽＆リズム"
+    "アクション",
+    "アドベンチャー",
+    "アーケード",
+    "カード",
+    "シミュレーション",
+    "スポーツ",
+    "パズル",
+    "パチンコ＆麻雀、ほか",
+    "ボード",
+    "ミニゲーム",
+    "レース",
+    "ロールプレイング",
+    "単語",
+    "戦略",
+    "教育",
+    "雑学",
+    "音楽＆リズム",
   ];
 
   const [errors, setErrors] = useState<{
@@ -88,7 +105,8 @@ const FormPost: React.FC = () => {
     if (!short) newErrors.short = "簡単な説明は必須です";
     if (!description) newErrors.description = "詳細は必須です";
     if (!iconUrl) newErrors.iconUrl = "アイコンURLは必須です";
-    if (screenshots.length === 0) newErrors.screenshots = "スクリーンショットは必須です";
+    if (screenshots.length === 0)
+      newErrors.screenshots = "スクリーンショットは必須です";
     if (!appType) newErrors.appType = "アプリ種別は必須です";
     if (!category) newErrors.category = "カテゴリは必須です";
     if (!status) newErrors.status = "公開状況は必須です";
@@ -141,98 +159,128 @@ const FormPost: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <FormControl isInvalid={!!errors.title}>
-        <FormLabel>タイトル</FormLabel>
-        <Input ref={titleRef} type="text" />
-        {errors.title && <FormErrorMessage>{errors.title}</FormErrorMessage>}
-      </FormControl>
-      <FormControl isInvalid={!!errors.short} mt={4}>
-        <FormLabel>簡単な説明</FormLabel>
-        <Textarea ref={shortRef} />
-        {errors.short && (
-          <FormErrorMessage>{errors.short}</FormErrorMessage>
-        )}
-      </FormControl>
-      <FormControl isInvalid={!!errors.description} mt={4}>
-        <FormLabel>詳細</FormLabel>
-        <Textarea ref={descriptionRef} />
-        {errors.description && (
-          <FormErrorMessage>{errors.description}</FormErrorMessage>
-        )}
-      </FormControl>
-      <FormControl isInvalid={!!errors.iconUrl} mt={4}>
-        <FormLabel>アイコンURL</FormLabel>
-        <ImageUploadButton label="アイコンをアップロード" onUpload={(url) => setIconUrl(url || "")} />
-        {errors.iconUrl && <FormErrorMessage>{errors.iconUrl}</FormErrorMessage>}
-      </FormControl>
-      <FormControl isInvalid={!!errors.screenshots} mt={4}>
-        <FormLabel>スクリーンショット</FormLabel>
-        <ImageUploadButton label="スクリーンショットをアップロード" onUpload={(url) => setScreenshots([...screenshots, url])} />
-        {errors.screenshots && (
-          <FormErrorMessage>{errors.screenshots}</FormErrorMessage>
-        )}
-      </FormControl>
-      <FormControl isInvalid={!!errors.appType} mt={4}>
-        <FormLabel>アプリ種別</FormLabel>
-        <Box>
-          <CustomCheckbox
-            label="アプリ"
-            checked={appType === 'アプリ'}
-            onChange={(checked) => setAppType(checked ? 'アプリ' : '')}
+      <VStack spacing={4} align="stretch">
+        <FormControl isInvalid={!!errors.title}>
+          <FormLabel>アプリ名</FormLabel>
+          <Input ref={titleRef} type="text" placeholder="アプリ名" />
+          {errors.title && <FormErrorMessage>{errors.title}</FormErrorMessage>}
+        </FormControl>
+        <FormControl isInvalid={!!errors.short}>
+          <FormLabel>簡単な説明</FormLabel>
+          <Textarea ref={shortRef} placeholder="簡単な説明" />
+          {errors.short && <FormErrorMessage>{errors.short}</FormErrorMessage>}
+        </FormControl>
+        <FormControl isInvalid={!!errors.description}>
+          <FormLabel>詳細</FormLabel>
+          <Textarea ref={descriptionRef} placeholder="詳しい説明" />
+          {errors.description && (
+            <FormErrorMessage>{errors.description}</FormErrorMessage>
+          )}
+        </FormControl>
+        <FormControl isInvalid={!!errors.iconUrl}>
+          <FormLabel>アプリのアイコン</FormLabel>
+          <ImageUploadButton
+            label="ファイルを選択"
+            onUpload={(url) => setIconUrl(url || "")}
           />
-          <CustomCheckbox
-            label="ゲーム"
-            checked={appType === 'ゲーム'}
-            onChange={(checked) => setAppType(checked ? 'ゲーム' : '')}
+          {iconUrl && <Image src={iconUrl} boxSize="80px" />}
+          {errors.iconUrl && (
+            <FormErrorMessage>{errors.iconUrl}</FormErrorMessage>
+          )}
+        </FormControl>
+        <FormControl isInvalid={!!errors.screenshots}>
+          <FormLabel>スクリーンショット</FormLabel>
+          <ImageUploadButton
+            label="ファイルを選択"
+            onUpload={(url) => setScreenshots([...screenshots, url])}
           />
-        </Box>
-        {errors.appType && <FormErrorMessage>{errors.appType}</FormErrorMessage>}
-      </FormControl>
-      <FormControl isInvalid={!!errors.category} mt={4}>
-        <FormLabel>カテゴリ</FormLabel>
+          <HStack spacing={2}>
+            {screenshots.map((screenshot, index) => (
+              <Image key={index} src={screenshot} boxSize="100px" height="177px" />
+            ))}
+          </HStack>
+          {errors.screenshots && (
+            <FormErrorMessage>{errors.screenshots}</FormErrorMessage>
+          )}
+        </FormControl>
+        <FormControl isInvalid={!!errors.appType}>
+          <FormLabel>アプリ種別</FormLabel>
+          <Stack direction="row">
+            <Checkbox
+              isChecked={appType === "アプリ"}
+              onChange={(e) => setAppType(e.target.checked ? "アプリ" : "")}
+            >
+              アプリ
+            </Checkbox>
+            <Checkbox
+              isChecked={appType === "ゲーム"}
+              onChange={(e) => setAppType(e.target.checked ? "ゲーム" : "")}
+            >
+              ゲーム
+            </Checkbox>
+          </Stack>
+          {errors.appType && (
+            <FormErrorMessage>{errors.appType}</FormErrorMessage>
+          )}
+        </FormControl>
+        <FormControl isInvalid={!!errors.category}>
+          <FormLabel>カテゴリ</FormLabel>
           <Select
-            placeholder="カテゴリ"
+            placeholder="選択してください"
             onChange={(e) => setCategory(e.target.value)}
             bg="white"
             size="lg"
           >
-            {categories.map(category => (
-              <option key={category} value={category}>{category}</option>
+            {categories.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
             ))}
           </Select>
-        {errors.category && <FormErrorMessage>{errors.category}</FormErrorMessage>}
-      </FormControl>
-      <FormControl isInvalid={!!errors.status} mt={4}>
-        <FormLabel>公開状況</FormLabel>
-        <Box>
-          <CustomCheckbox
-            label="テスター募集"
-            checked={status === 'テスター募集'}
-            onChange={(checked) => setStatus(checked ? 'テスター募集' : '')}
-          />
-          <CustomCheckbox
-            label="リリース済み"
-            checked={status === 'リリース済み'}
-            onChange={(checked) => setStatus(checked ? 'リリース済み' : '')}
-          />
-        </Box>
-        {errors.status && <FormErrorMessage>{errors.status}</FormErrorMessage>}
-      </FormControl>
-      <FormControl isInvalid={!!errors.groupUrl} mt={4}>
-        <FormLabel>GoogleグループURL</FormLabel>
-        <Input ref={groupUrlRef} type="text" />
-        {errors.groupUrl && (
-          <FormErrorMessage>{errors.groupUrl}</FormErrorMessage>
-        )}
-      </FormControl>
-      <FormControl isInvalid={!!errors.storeUrl} mt={4}>
-        <FormLabel>ストアURL</FormLabel>
-        <Input ref={storeUrlRef} type="text" />
-        {errors.storeUrl && <FormErrorMessage>{errors.storeUrl}</FormErrorMessage>}
-      </FormControl>
-      <Button type="submit" mt={4}>
-        投稿
-      </Button>
+          {errors.category && (
+            <FormErrorMessage>{errors.category}</FormErrorMessage>
+          )}
+        </FormControl>
+        <FormControl isInvalid={!!errors.status}>
+          <FormLabel>公開状況</FormLabel>
+          <Stack direction="row">
+            <Checkbox
+              isChecked={status === "テスター募集"}
+              onChange={(e) =>
+                setStatus(e.target.checked ? "テスター募集" : "")
+              }
+            >
+              テスター募集
+            </Checkbox>
+            <Checkbox
+              isChecked={status === "リリース済み"}
+              onChange={(e) =>
+                setStatus(e.target.checked ? "リリース済み" : "")
+              }
+            >
+              リリース済み
+            </Checkbox>
+          </Stack>
+          {errors.status && <FormErrorMessage>{errors.status}</FormErrorMessage>}
+        </FormControl>
+        <FormControl isInvalid={!!errors.groupUrl}>
+          <FormLabel>GoogleグループURL</FormLabel>
+          <Input ref={groupUrlRef} type="text" placeholder="URL" />
+          {errors.groupUrl && (
+            <FormErrorMessage>{errors.groupUrl}</FormErrorMessage>
+          )}
+        </FormControl>
+        <FormControl isInvalid={!!errors.storeUrl}>
+          <FormLabel>ストアURL</FormLabel>
+          <Input ref={storeUrlRef} type="text" placeholder="URL" />
+          {errors.storeUrl && (
+            <FormErrorMessage>{errors.storeUrl}</FormErrorMessage>
+          )}
+        </FormControl>
+        <Button type="submit" colorScheme="teal">
+          投稿する
+        </Button>
+      </VStack>
     </form>
   );
 };

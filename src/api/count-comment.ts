@@ -1,7 +1,7 @@
-export const countLike = async (postId: String) => {
+export const countComment = async (postId: String) => {
   const baseUrl =
     process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3010";
-  const res = await fetch(`${baseUrl}/api/post/like/count-like`, {
+  const res = await fetch(`${baseUrl}/api/post/comment/count-comment`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -13,5 +13,5 @@ export const countLike = async (postId: String) => {
     throw new Error("Failed to fetch posts");
   }
   const data = await res.json();
-  return data.likeCount;
+  return data.commentCount;
 };

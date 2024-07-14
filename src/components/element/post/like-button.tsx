@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { IconButton, HStack, Text } from "@chakra-ui/react";
-import { FaHeart, FaRegHeart } from 'react-icons/fa';
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { toggleLike } from "@/api/toggle-like";
 import { checkLike } from "@/api/check-like";
 import { countLike } from "@/api/count-like";
@@ -8,7 +8,7 @@ import { useSession, signIn } from "next-auth/react";
 
 type LikeButtonProps = {
   postId: string;
-}
+};
 
 const LikeButton: React.FC<LikeButtonProps> = ({ postId }) => {
   const { data: session } = useSession();
@@ -17,18 +17,16 @@ const LikeButton: React.FC<LikeButtonProps> = ({ postId }) => {
 
   useEffect(() => {
     const fetchLikeData = async () => {
+      const count = await countLike(postId);
+      setLikeCount(count);
+
       if (session && session.user?.id) {
         const liked = await checkLike(postId, session.user.id);
         setIsLiked(liked);
-
-        const count = await countLike(postId);
-        setLikeCount(count);
       }
     };
 
-    if (session) {
-      fetchLikeData();
-    }
+    fetchLikeData();
   }, [session, postId]);
 
   const handleLikeClick = async (event: React.MouseEvent) => {
@@ -56,6 +54,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({ postId }) => {
         icon={isLiked ? <FaHeart color="red" /> : <FaRegHeart />}
         onClick={handleLikeClick}
         aria-label="Like"
+        isDisabled={!session}
       />
       <Text>{likeCount}</Text>
     </HStack>

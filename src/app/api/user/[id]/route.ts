@@ -1,21 +1,12 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { prisma } from '@/libs/server';
-import { UserProps } from '@/types/user';
+import { NextResponse } from "next/server";
+import { prisma } from "@/libs/server";
+import { UserProps } from "@/types/user";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'GET') {
-    return handleGet(req, res);
-  } else if (req.method === 'PUT') {
-    return handlePut(req, res);
-  } else {
-    return res.status(405).json({ message: "Method not allowed" });
-  }
-}
-
-async function handleGet(req: NextApiRequest, res: NextApiResponse) {
+//userの情報取得
+export const GET = async (req: Request) => {
   try {
-    const url = req.url ? new URL(req.url, 'http://localhost:3000') : null;
-    const id = url?.pathname.split("/user/")[1];
+    const url = new URL(req.url);
+    const id = url.pathname.split("/user/")[1];
 
     const user = await prisma.user.findUnique({
       where: {
@@ -23,43 +14,38 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse) {
       },
     });
 
+    // ユーザー情報が存在しない場合のエラーハンドリング
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
-
-    return res.status(200).json(user);
+    return NextResponse.json(user);
   } catch (err) {
-    return res.status(500).json({ message: "Error", err });
+    return NextResponse.json({ message: "Error", err }, { status: 500 });
   }
-}
+};
 
-async function handlePut(req: NextApiRequest, res: NextApiResponse) {
-  const url = req.url ? new URL(req.url, 'http://localhost:3000') : null;
-  const id = url?.pathname.split("/user/")[1];
-  
+// user情報編集用API
+export const PUT = async (req: Request) => {
+  const url = new URL(req.url);
+  const id = url.pathname.split("/user/")[1];
   try {
-    const { name, introduce, image }: UserProps = req.body;
+    const { name, introduce, image }: UserProps = await req.json();
 
     if (!id || !name) {
-      return res.status(400).json({ message: "Missing fields" });
+      return NextResponse.json({ message: "Missing fields" }, { status: 400 });
     }
 
-    const updatedUser = await prisma.user.update({
-      where: { id },
+    const users = await prisma.user.update({
       data: {
         name,
         image,
         introduce,
       },
+      where: { id },
     });
 
-    return res.status(200).json(updatedUser);
+    return NextResponse.json(users);
   } catch (err) {
-    let errorMessage = "Unknown error";
-    if (err instanceof Error) {
-      errorMessage = err.message;
-    }
-
-    return res.status(500).json({ message: "Error", error: errorMessage });
+    return NextResponse.json({ messege: 'Error', err }, { status: 500 });
   }
-}
+};

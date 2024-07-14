@@ -1,5 +1,5 @@
 export type TagProps = {
-  appType: string,
-  category: string,
-  status: string
-}
+  appType: string;
+  category: string;
+  status: string;
+};

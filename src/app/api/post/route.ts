@@ -2,9 +2,9 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/libs/server";
 
 export type TagProps = {
-  appType?: string,
-  category?: string,
-  status?: string
+  appType?: string;
+  category?: string;
+  status?: string;
 };
 //ポストの全記事取得
 export const GET = async () => {
@@ -41,7 +41,7 @@ export const POST = async (req: Request) => {
       });
     }
     return NextResponse.json(posts);
-  } catch (err){
+  } catch (err) {
     return NextResponse.json({ message: "Error", err }, { status: 500 });
   }
-}
+};

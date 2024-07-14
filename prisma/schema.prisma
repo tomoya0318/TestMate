@@ -20,6 +20,7 @@ model User {
   post          Post[]
   sessions      Session[]
   likes         Like[]
+  comments      Comment[]
 }
 
 model Account {
@@ -55,6 +56,7 @@ model Post {
   user           User     @relation(fields: [userId], references: [id])
   likes Like[]
   tags  PostTags[]
+  comments Comment[]
   @@index([userId])
 }
 
@@ -94,4 +96,16 @@ model PostTags {
   tagId  String
 
   @@id([postId, tagId])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+  postId    String
+  userId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([postId])
+  @@index([userId])
 }

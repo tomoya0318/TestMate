@@ -4,7 +4,7 @@ import { prisma } from "@/libs/server";
 // POST新規作成用API
 export const POST = async (req: Request) => {
   try {
-    const { 
+    const {
       title,
       short,
       description,
@@ -12,10 +12,19 @@ export const POST = async (req: Request) => {
       screenshots,
       groupUrl,
       storeUrl,
-      userId
+      userId,
     } = await req.json();
 
-    if (!userId || !title || !short || !description || !iconUrl || !screenshots || !groupUrl || !storeUrl) {
+    if (
+      !userId ||
+      !title ||
+      !short ||
+      !description ||
+      !iconUrl ||
+      !screenshots ||
+      !groupUrl ||
+      !storeUrl
+    ) {
       return NextResponse.json({ message: "Missing fields" }, { status: 400 });
     }
 
@@ -28,21 +37,12 @@ export const POST = async (req: Request) => {
         screenshots,
         groupUrl,
         storeUrl,
-        userId
+        userId,
       },
     });
 
     return NextResponse.json(post);
   } catch (err) {
-    // エラーオブジェクトが`unknown`型であるため、型ガードを使用してエラーメッセージを取り出す
-    let errorMessage = "Unknown error";
-    if (err instanceof Error) {
-      errorMessage = err.message;
-    }
-
-    return NextResponse.json(
-      { message: "Error", error: errorMessage },
-      { status: 500 },
-    );
+    return NextResponse.json({ messege: 'Error', err }, { status: 500 });
   }
 };
