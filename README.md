@@ -1,15 +1,31 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
 ## Getting Started
-以下のコマンドを順に実行(docker使用)
+以下のコマンドを順に実行(yarn v4を使用します)
+
+1. 開発環境のインストール
 ```
-make build
-```
-```
-make up
+yarn install
 ```
 
-Open [http://localhost:3010](http://localhost:3010) with your browser to see the result.
+2. 開発環境の立ち上げ
+```
+yarn dev
+```
+
+開発環境は[http://localhost:3010](http://localhost:3010)にて確認できます
+
+
+## コミット時のルール
+Prefixをつけましょう.[参考](https://arc.net/l/quote/zdnbwhew)
+
+- feat: 新しい機能
+- fix: バグの修正
+- docs: ドキュメントのみの変更
+- style: 空白、フォーマット、セミコロン追加など
+- refactor: 仕様に影響がないコード改善(リファクタ)
+- perf: パフォーマンス向上関連
+- test: テスト関連
+- chore: ビルド、補助ツール、ライブラリ関連
+
 
 ## 各ファイルの役割
 ```
