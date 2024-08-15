@@ -3,11 +3,6 @@ generator client {
   previewFeatures = ["driverAdapters"]
 }
 
-generator erd {
-  provider = "prisma-erd-generator"
-  output   = "./ERD.svg"
-}
-
 datasource db {
   provider = "postgresql"
   url = env("DATABASE_URL")
@@ -26,24 +21,22 @@ model User {
   sessions      Session[]
   likes         Like[]
   comments      Comment[]
-  testers       Tester[]
-
   @@map("users")
 }
 
 model Account {
   id                 String  @id @default(cuid())
-  userId             String  @map("user_id")
+  userId             String
   type               String
   provider           String
   providerAccountId  String  @map("provider_account_id")
-  refreshToken       String? @map("refresh_token")
-  accessToken        String? @map("access_token")
-  expiresAt          Int?    @map("expires_at")
-  tokenType          String? @map("token_type")
+  refresh_token      String?
+  access_token       String?
+  expires_at         Int?
+  token_type         String?
   scope              String?
-  tokenId            String? @map("token_id")
-  sessionState       String? @map("session_state")
+  id_token           String?
+  session_state      String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -61,83 +54,67 @@ model Post {
   groupUrl       String       @map("group_url")
   storeUrl       String       @map("store_url")
   createdAt      DateTime     @map("created_at") @default(now())
-  updatedAt      DateTime     @map("update_at")  @updatedAt
-  userId         String       @map("user_id")
+  updatedAt      DateTime     @map("updated_at") @updatedAt
+  userId         String
   user           User     @relation(fields: [userId], references: [id])
   likes Like[]
   tags  PostTag[]
   comments Comment[]
-  testers Tester[]
   @@index([userId])
   @@map("posts")
 }
 
 model Session {
   id           String   @id @default(cuid())
-  sessionToken String   @map("session_token") @unique
-  userId       String   @map("user_id")
-  expiresAt    DateTime @map("expiers_at")
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt DateTime    @map("created_at") @default(now())
-  updatedAt DateTime    @map("updated_at") @updatedAt
+  createdAt    DateTime @map("created_at") @default(now())
+  updatedAt    DateTime @map("updated_at") @updatedAt
   @@map("sessions")
 }
 
 model Like {
   user      User       @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  userId    String     @map("user_id")
+  userId    String     @map("user_id") 
   post      Post       @relation(fields: [postId], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  postId    String     @map("post_id")
+  postId    String     @map("post_id") 
   createdAt DateTime   @map("created_at") @default(now())
   updatedAt DateTime   @map("updated_at") @updatedAt
-
   @@id([userId, postId])
   @@map("likes")
 }
 
-
 model Tag {
   id          String      @id @default(cuid())
   posts       PostTag[]
-  appType     String      @map("app_type") 
+  appType     String      
   category    String   
-  status      String
-  @@map("tags")
+  status      String    
+  @@map("tags")  
 }
 
 
 model PostTag {
-  post   Post    @relation(fields: [postId], references: [id])
-  postId String  @map("post_id")
-  tag    Tag     @relation(fields: [tagId], references: [id])
-  tagId  String  @map("tag_id")
+  post   Post  @relation(fields: [postId], references: [id])
+  postId String
+  tag    Tag   @relation(fields: [tagId], references: [id])
+  tagId  String
 
   @@id([postId, tagId])
   @@map("posts_tags")
 }
 
-
 model Comment {
   id        String   @id @default(cuid())
   content   String
-  createdAt DateTime @map("created_at") @default(now())
-  updatedAt DateTime @map("updated_at") @updatedAt
-  postId    String   @map("post_id")
-  userId    String   @map("user_id")
+  createdAt DateTime @default(now())
+  postId    String
+  userId    String
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   @@index([postId])
   @@index([userId])
   @@map("comments")
-}
-
-model Tester {
-  id String          @id @default(cuid())
-  postId    String   @map("post_id")
-  userId    String   @map("user_id")
-  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  @@index([postId])
-  @@index([userId])
-  @@map("testers")
 }
