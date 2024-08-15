@@ -13,14 +13,16 @@ model User {
   id            String          @id @default(cuid())
   name          String?
   email         String          @unique
-  emailVerified DateTime?
+  emailVerified DateTime?       @map("email_verified")
   introduce     String?
   image         String?
   accounts      Account[]
-  post          Post[]
+  posts         Post[]
   sessions      Session[]
   likes         Like[]
   comments      Comment[]
+  testers       Tester[]
+  @@map("users")
 }
 
 model Account {
@@ -28,7 +30,7 @@ model Account {
   userId             String
   type               String
   provider           String
-  providerAccountId  String
+  providerAccountId  String  @map("provider_account_id")
   refresh_token      String?
   access_token       String?
   expires_at         Int?
@@ -40,6 +42,7 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@map("accounts")
 }
 
 model Post {
@@ -47,17 +50,20 @@ model Post {
   title          String
   short          String
   description    String
-  iconUrl        String
+  iconUrl        String       @map("icon_url")
   screenshots    String[]
-  groupUrl       String
-  storeUrl       String
-  date           DateTime @default(now())
+  groupUrl       String       @map("group_url")
+  storeUrl       String       @map("store_url")
+  createdAt      DateTime     @map("created_at") @default(now())
+  updatedAt      DateTime     @map("updated_at") @updatedAt
   userId         String
   user           User     @relation(fields: [userId], references: [id])
-  likes Like[]
-  tags  PostTags[]
-  comments Comment[]
+  likes          Like[]
+  tags           PostTag[]
+  comments       Comment[]
+  testers        Tester[]
   @@index([userId])
+  @@map("posts")
 }
 
 model Session {
@@ -66,36 +72,40 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt    DateTime @map("created_at") @default(now())
+  updatedAt    DateTime @map("updated_at") @updatedAt
+  @@map("sessions")
 }
 
 model Like {
-  user    User       @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  userId  String     @map("user_id") 
-  post    Post       @relation(fields: [postId], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  postId  String        @map("post_id") 
-  createdAt DateTime @map("created_at") @default(now())
+  user      User       @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  userId    String     @map("user_id") 
+  post      Post       @relation(fields: [postId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  postId    String     @map("post_id") 
+  createdAt DateTime   @map("created_at") @default(now())
+  updatedAt DateTime   @map("updated_at") @updatedAt
   @@id([userId, postId])
   @@map("likes")
 }
 
-model Tags {
+model Tag {
   id          String      @id @default(cuid())
-  posts       PostTags[]
+  posts       PostTag[]
   appType     String      
   category    String   
-  status      String      
+  status      String    
+  @@map("tags")  
 }
 
 
-model PostTags {
+model PostTag {
   post   Post  @relation(fields: [postId], references: [id])
   postId String
-  tag    Tags   @relation(fields: [tagId], references: [id])
+  tag    Tag   @relation(fields: [tagId], references: [id])
   tagId  String
 
   @@id([postId, tagId])
+  @@map("posts_tags")
 }
 
 model Comment {
@@ -108,4 +118,16 @@ model Comment {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   @@index([postId])
   @@index([userId])
+  @@map("comments")
+}
+
+model Tester {
+  id String          @id @default(cuid())
+  postId    String   @map("post_id")
+  userId    String   @map("user_id")
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([postId])
+  @@index([userId])
+  @@map("testers")
 }
