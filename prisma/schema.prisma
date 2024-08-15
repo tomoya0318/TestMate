@@ -21,6 +21,7 @@ model User {
   sessions      Session[]
   likes         Like[]
   comments      Comment[]
+  testers       Tester[]
   @@map("users")
 }
 
@@ -57,9 +58,10 @@ model Post {
   updatedAt      DateTime     @map("updated_at") @updatedAt
   userId         String
   user           User     @relation(fields: [userId], references: [id])
-  likes Like[]
-  tags  PostTag[]
-  comments Comment[]
+  likes          Like[]
+  tags           PostTag[]
+  comments       Comment[]
+  testers        Tester[]
   @@index([userId])
   @@map("posts")
 }
@@ -117,4 +119,15 @@ model Comment {
   @@index([postId])
   @@index([userId])
   @@map("comments")
+}
+
+model Tester {
+  id String          @id @default(cuid())
+  postId    String   @map("post_id")
+  userId    String   @map("user_id")
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([postId])
+  @@index([userId])
+  @@map("testers")
 }
