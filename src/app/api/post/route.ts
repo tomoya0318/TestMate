@@ -9,8 +9,22 @@ export type TagProps = {
 //ポストの全記事取得
 export const GET = async () => {
   try {
-    const posts = await prisma.post.findMany();
-    return NextResponse.json(posts);
+    const posts = await prisma.post.findMany({
+      include:{
+        likes: true,
+        comments: true,
+        testers: true,
+      }
+    });
+    const filteredPosts = posts.map(({likes, comments, testers, ...post}) => {
+      return {
+        ...post,
+        like: likes.filter(like => like.postId === post.id),
+        comment: comments.filter(comment => comment.postId === post.id),
+        tester: testers.filter(tester => tester.postId === post.id)
+      }
+    })
+    return NextResponse.json(filteredPosts);
   } catch (err) {
     return NextResponse.json({ messege: "Error", err }, { status: 500 });
   }
