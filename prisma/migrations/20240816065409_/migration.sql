@@ -13,7 +13,7 @@ CREATE TABLE "users" (
 -- CreateTable
 CREATE TABLE "accounts" (
     "id" TEXT NOT NULL,
-    "user_id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
     "type" TEXT NOT NULL,
     "provider" TEXT NOT NULL,
     "provider_account_id" TEXT NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE "accounts" (
     "expires_at" INTEGER,
     "token_type" TEXT,
     "scope" TEXT,
-    "token_id" TEXT,
+    "id_token" TEXT,
     "session_state" TEXT,
 
     CONSTRAINT "accounts_pkey" PRIMARY KEY ("id")
@@ -39,8 +39,8 @@ CREATE TABLE "posts" (
     "group_url" TEXT NOT NULL,
     "store_url" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "update_at" TIMESTAMP(3) NOT NULL,
-    "user_id" TEXT NOT NULL,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+    "userId" TEXT NOT NULL,
 
     CONSTRAINT "posts_pkey" PRIMARY KEY ("id")
 );
@@ -48,9 +48,9 @@ CREATE TABLE "posts" (
 -- CreateTable
 CREATE TABLE "sessions" (
     "id" TEXT NOT NULL,
-    "session_token" TEXT NOT NULL,
+    "sessionToken" TEXT NOT NULL,
     "user_id" TEXT NOT NULL,
-    "expiers_at" TIMESTAMP(3) NOT NULL,
+    "expires" TIMESTAMP(3) NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
@@ -72,7 +72,7 @@ CREATE TABLE "tags" (
     "id" TEXT NOT NULL,
     "app_type" TEXT NOT NULL,
     "category" TEXT NOT NULL,
-    "status" TEXT NOT NULL,
+    "public_status" TEXT NOT NULL,
 
     CONSTRAINT "tags_pkey" PRIMARY KEY ("id")
 );
@@ -90,7 +90,6 @@ CREATE TABLE "comments" (
     "id" TEXT NOT NULL,
     "content" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP(3) NOT NULL,
     "post_id" TEXT NOT NULL,
     "user_id" TEXT NOT NULL,
 
@@ -113,10 +112,10 @@ CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 CREATE UNIQUE INDEX "accounts_provider_provider_account_id_key" ON "accounts"("provider", "provider_account_id");
 
 -- CreateIndex
-CREATE INDEX "posts_user_id_idx" ON "posts"("user_id");
+CREATE INDEX "posts_userId_idx" ON "posts"("userId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "sessions_session_token_key" ON "sessions"("session_token");
+CREATE UNIQUE INDEX "sessions_sessionToken_key" ON "sessions"("sessionToken");
 
 -- CreateIndex
 CREATE INDEX "comments_post_id_idx" ON "comments"("post_id");
@@ -131,10 +130,10 @@ CREATE INDEX "testers_post_id_idx" ON "testers"("post_id");
 CREATE INDEX "testers_user_id_idx" ON "testers"("user_id");
 
 -- AddForeignKey
-ALTER TABLE "accounts" ADD CONSTRAINT "accounts_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "accounts" ADD CONSTRAINT "accounts_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "posts" ADD CONSTRAINT "posts_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "posts" ADD CONSTRAINT "posts_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "sessions" ADD CONSTRAINT "sessions_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
