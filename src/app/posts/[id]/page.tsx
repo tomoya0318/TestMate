@@ -12,8 +12,8 @@ import {
   HStack,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import LikeButton from "../../../components/element/post/like-button";
-import CommentButton from "../../../components/element/post/comment-button";
+import LikeButton from "../_components/like-button";
+import CommentButton from "../_components/comment-button";
 import { CommentAndUserImageProps } from "@/types/comment";
 import Link from "next/link";
 import { AddCommentForm } from "./_components/add-comment-form";

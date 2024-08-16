@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { addPost } from "@/api/add-post";
 import { addTag } from "@/api/add-tag";
-import { app_type, categories, public_status } from "@/constants/app-config";
+import { APP_TYPE, CATEGORIES, PUBLIC_STATUS } from "@/constants/index";
 import {
   FormControl,
   FormLabel,
@@ -190,7 +190,7 @@ const FormPost: React.FC = () => {
           <FormControl isInvalid={!!errors.appType}>
             <FormLabel>アプリ種別</FormLabel>
             <Stack direction="row">
-              {app_type.map((type) => (
+              {APP_TYPE.map((type) => (
                 <Checkbox
                   key={type}
                   isChecked={appType === type}
@@ -212,7 +212,7 @@ const FormPost: React.FC = () => {
               bg="white"
               size="lg"
             >
-              {categories.map((category) => (
+              {CATEGORIES.map((category) => (
                 <option key={category} value={category}>
                   {category}
                 </option>
@@ -225,7 +225,7 @@ const FormPost: React.FC = () => {
           <FormControl isInvalid={!!errors.status}>
             <FormLabel>公開状況</FormLabel>
             <Stack direction="row">
-              {public_status.map((stat) => (
+              {PUBLIC_STATUS.map((stat) => (
                 <Checkbox
                   key={stat}
                   isChecked={status===stat}

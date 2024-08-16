@@ -8,19 +8,19 @@ import {
   Image,
   Text,
 } from "@chakra-ui/react";
-import { PostProps } from "@/types/post";
-import LikeButton from "./like-button";
-import CommentButton from "./comment-button";
+import { Post } from "@/types/posts";
+import LikeButton from "../../../app/posts/_components/like-button";
+import CommentButton from "../../../app/posts/_components/comment-button";
 import { FaUser } from "react-icons/fa";
 
-type PostListProps = {
-  posts: PostProps[];
-};
+interface PostListProps {
+  posts: Post[];
+}
 
 const PostList: React.FC<PostListProps> = ({ posts }) => {
   return (
     <VStack align="stretch" spacing={4}>
-      {posts.map((post: PostProps) => (
+      {posts.map((post: Post) => (
         <Container
           key={post.id}
           bg="white"
