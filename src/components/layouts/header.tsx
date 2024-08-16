@@ -25,7 +25,7 @@ const Header = async () => {
             </Link>
           </HStack>
           <HStack spacing={4} alignItems="center">
-            <Link href="/post/new">
+            <Link href="/posts/submit">
               <Button
                 bg="#0DCEDA"
                 color="white"

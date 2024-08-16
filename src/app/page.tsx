@@ -1,4 +1,4 @@
-import Postpage from "./post/page";
+import Postpage from "./posts/page";
 
 const Home = async () => {
   return (
