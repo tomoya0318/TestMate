@@ -24,7 +24,7 @@ export const addPost = async ({
   }
   const baseUrl =
     process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3010";
-  const res = await fetch(`${baseUrl}/api/post/new`, {
+  const res = await fetch(`${baseUrl}/api/post/submit`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
