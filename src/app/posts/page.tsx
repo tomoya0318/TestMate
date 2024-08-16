@@ -1,6 +1,7 @@
 "use client";
-import { getAllPost } from "@/api/get-all-post";
-import { PostProps } from "@/types/post";
+import { getPosts } from "@/api/get-posts";
+import { Post } from "@/types/posts";
+import { APP_TYPE, CATEGORIES, PUBLIC_STATUS} from "@/constants/index";
 import {
   Container,
   HStack,
@@ -9,10 +10,10 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import PostList from '@/components/element/post/post-list';
+import PostList from "./_components/post-list";
 
 const Postpage = () => {
-  const [posts, setPosts] = useState<PostProps[]>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [appType, setAppType] = useState<string>("");
   const [category, setCategory] = useState<string>("");
   const [status, setStatus] = useState<string>("");
@@ -20,7 +21,7 @@ const Postpage = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const allPosts: PostProps[] = await getAllPost();
+        const allPosts: Post[] = await getPosts();
         setPosts(allPosts);
       } catch (error) {
         console.error("Failed to fetch posts:", error);
@@ -32,35 +33,13 @@ const Postpage = () => {
 
   const handleSearch = async () => {
     try {
-      const postsData: PostProps[] = await getAllPost(appType, category, status);
+      const postsData: Post[] = await getPosts(appType, category, status);
       setPosts(postsData);
     } catch (error) {
       console.error("Failed to search posts:", error);
     }
   };
-
-  const appTypes = ["アプリ", "ゲーム"];
-  const categories = [
-    "アクション",
-    "アドベンチャー",
-    "アーケード",
-    "カード",
-    "シミュレーション",
-    "スポーツ",
-    "パズル",
-    "パチンコ＆麻雀、ほか",
-    "ボード",
-    "ミニゲーム",
-    "レース",
-    "ロールプレイング",
-    "単語",
-    "戦略",
-    "教育",
-    "雑学",
-    "音楽＆リズム",
-  ];
-  const statuses = ["テスト中", "リリース済み"];
-
+  
   return (
     <Container mt={1} p={10}>
       <VStack align="stretch" spacing={4}>
@@ -71,7 +50,7 @@ const Postpage = () => {
             bg="white"
             size="lg"
           >
-            {appTypes.map((type) => (
+            {APP_TYPE.map((type) => (
               <option key={type} value={type}>
                 {type}
               </option>
@@ -83,7 +62,7 @@ const Postpage = () => {
             bg="white"
             size="lg"
           >
-            {categories.map((category) => (
+            {CATEGORIES.map((category) => (
               <option key={category} value={category}>
                 {category}
               </option>
@@ -95,7 +74,7 @@ const Postpage = () => {
             bg="white"
             size="lg"
           >
-            {statuses.map((status) => (
+            {PUBLIC_STATUS.map((status) => (
               <option key={status} value={status}>
                 {status}
               </option>
