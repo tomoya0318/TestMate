@@ -1,7 +1,8 @@
 import {Post} from "@prisma/client";
 
-export const posts: Omit<Post, 'id'>[] = [
+export const posts: Post[] = [
   {
+    id: "post1",
     title: "エクスプロラーズ",
     short: "街歩きリアル探索ゲーム",
     description: "エクスプロラーズの詳しい説明",
