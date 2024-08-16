@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { addPost } from "@/api/add-post";
 import { addTag } from "@/api/add-tag";
+import { app_type, categories, public_status } from "@/constants/app-config";
 import {
   FormControl,
   FormLabel,
@@ -39,27 +40,6 @@ const FormPost: React.FC = () => {
   const [appType, setAppType] = useState<string>("");
   const [category, setCategory] = useState<string>("");
   const [status, setStatus] = useState<string>("");
-
-  const categories = [
-    "アクション",
-    "アドベンチャー",
-    "アーケード",
-    "カード",
-    "シミュレーション",
-    "スポーツ",
-    "パズル",
-    "パチンコ＆麻雀、ほか",
-    "ボード",
-    "ミニゲーム",
-    "レース",
-    "ロールプレイング",
-    "単語",
-    "戦略",
-    "教育",
-    "雑学",
-    "音楽＆リズム",
-  ];
-
   const [errors, setErrors] = useState<{
     title?: string;
     short?: string;
@@ -210,18 +190,15 @@ const FormPost: React.FC = () => {
           <FormControl isInvalid={!!errors.appType}>
             <FormLabel>アプリ種別</FormLabel>
             <Stack direction="row">
-              <Checkbox
-                isChecked={appType === "アプリ"}
-                onChange={(e) => setAppType(e.target.checked ? "アプリ" : "")}
-              >
-                アプリ
-              </Checkbox>
-              <Checkbox
-                isChecked={appType === "ゲーム"}
-                onChange={(e) => setAppType(e.target.checked ? "ゲーム" : "")}
-              >
-                ゲーム
-              </Checkbox>
+              {app_type.map((type) => (
+                <Checkbox
+                  key={type}
+                  isChecked={appType === type}
+                  onChange={(e) => setAppType(e.target.checked ? type : "")}
+                >
+                  {type}
+                </Checkbox>
+              ))}
             </Stack>
             {errors.appType && (
               <FormErrorMessage>{errors.appType}</FormErrorMessage>
@@ -248,22 +225,15 @@ const FormPost: React.FC = () => {
           <FormControl isInvalid={!!errors.status}>
             <FormLabel>公開状況</FormLabel>
             <Stack direction="row">
-              <Checkbox
-                isChecked={status === "テスター募集"}
-                onChange={(e) =>
-                  setStatus(e.target.checked ? "テスター募集" : "")
-                }
-              >
-                テスター募集
-              </Checkbox>
-              <Checkbox
-                isChecked={status === "リリース済み"}
-                onChange={(e) =>
-                  setStatus(e.target.checked ? "リリース済み" : "")
-                }
-              >
-                リリース済み
-              </Checkbox>
+              {public_status.map((stat) => (
+                <Checkbox
+                  key={stat}
+                  isChecked={status===stat}
+                  onChange={(e) => setStatus(e.target.checked ? stat : "")}
+                  >
+                    {stat}
+                  </Checkbox>
+              ))}
             </Stack>
             {errors.status && <FormErrorMessage>{errors.status}</FormErrorMessage>}
           </FormControl>
