@@ -1,7 +1,11 @@
-import { Post as PrismaPost, Like, Comment, Tester } from "@prisma/client";
+import { Post, Like, Comment, Tester, Tag } from "@prisma/client";
 
-export interface Post extends PrismaPost {
+export interface DisplayPost extends Post {
   likes: Like[];
   comments: Comment[];
   testers: Tester[];
-}
+};
+
+export interface CreatePost extends Omit<Post, 'id'>　{
+  tag: Omit<Tag, "id">;
+};
