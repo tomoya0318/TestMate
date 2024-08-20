@@ -1,16 +1,9 @@
-import React from 'react';
-import Link from 'next/link';
-import {
-  Box,
-  Container,
-  HStack,
-  VStack,
-  Image,
-  Text,
-} from "@chakra-ui/react";
+import React from "react";
+import Link from "next/link";
+import { Box, Container, HStack, VStack, Image, Text } from "@chakra-ui/react";
 import { DisplayPost } from "@/types/posts";
-import LikeButton from "../../../app/posts/_components/like-button";
-import CommentButton from "../../../app/posts/_components/comment-button";
+import LikeButton from "@/app/posts/_components/like-button";
+import CommentButton from "@/app/posts/_components/comment-button";
 import { FaUser } from "react-icons/fa";
 
 interface PostListProps {
@@ -47,7 +40,8 @@ const PostList: React.FC<PostListProps> = ({ posts }) => {
                   <CommentButton postId={post.id} />
                   <HStack alignItems="center">
                     <FaUser />
-                    <Text>44</Text> {/* ダミーデータ：必要ならばAPIから取得して表示 */}
+                    <Text>44</Text>{" "}
+                    {/* ダミーデータ：必要ならばAPIから取得して表示 */}
                   </HStack>
                   <LikeButton postId={post.id} />
                 </HStack>

@@ -1,12 +1,11 @@
 import { BASE_URL } from "@/constants";
-import { Post } from "@/types/posts";
-
+import { DisplayPost } from "@/types/posts";
 
 export const getPosts = async (
   appType?: string,
   category?: string,
   status?: string,
-): Promise<Post[]> => {
+): Promise<DisplayPost[]> => {
   const queryParams = new URLSearchParams();
 
   if (appType) queryParams.append("app_type", appType);
@@ -14,7 +13,6 @@ export const getPosts = async (
   if (status) queryParams.append("public_status", status);
 
   const url = `${BASE_URL}/api/posts${queryParams.toString() ? `?${queryParams.toString()}` : ""}`;
-  console.log(url);
   const res = await fetch(url, {
     method: "GET",
   });

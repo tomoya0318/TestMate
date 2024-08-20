@@ -33,7 +33,10 @@ export const GET = async (req: Request) => {
 
     // likedPostsが存在しない場合の処理
     if (likedPosts.length === 0) {
-      return NextResponse.json({ message: "No liked posts found" }, { status: 404 });
+      return NextResponse.json(
+        { message: "No liked posts found" },
+        { status: 404 },
+      );
     }
 
     // postIdに基づいてpostのデータを取得
@@ -45,6 +48,6 @@ export const GET = async (req: Request) => {
     });
     return NextResponse.json(posts);
   } catch (err) {
-    return NextResponse.json({ message: 'Error', err }, { status: 500 });
+    return NextResponse.json({ message: "Error", err }, { status: 500 });
   }
 };

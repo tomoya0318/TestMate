@@ -1,9 +1,6 @@
 export const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-export const APP_TYPE = [
-  "アプリ",
-  "ゲーム",
-];
+export const APP_TYPE = ["アプリ", "ゲーム"];
 
 export const CATEGORIES = [
   "アクション",
@@ -25,7 +22,4 @@ export const CATEGORIES = [
   "音楽＆リズム",
 ];
 
-export const PUBLIC_STATUS = [
-  "テスター募集中",
-  "リリース済み",
-];
+export const PUBLIC_STATUS = ["テスター募集中", "リリース済み"];

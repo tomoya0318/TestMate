@@ -5,7 +5,15 @@ import { getMyPosts } from "@/api/get-my-posts";
 import { UserProps } from "@/types/user";
 import { PostProps } from "@/types/post";
 import PostList from "@/components/element/post/post-list";
-import { Box, Container, Flex, Heading, Text, Image, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Container,
+  Flex,
+  Heading,
+  Text,
+  Image,
+  VStack,
+} from "@chakra-ui/react";
 
 const DisplayProfilePage = ({ params }: { params: { id: string } }) => {
   const [user, setUser] = useState<UserProps | null>(null);
@@ -19,7 +27,7 @@ const DisplayProfilePage = ({ params }: { params: { id: string } }) => {
       try {
         const userProfile = await getSingleUser(userId);
         setUser(userProfile);
-        
+
         const myPosts = await getMyPosts(userId);
         setPosts(myPosts);
       } catch (error) {

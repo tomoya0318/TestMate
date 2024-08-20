@@ -94,7 +94,15 @@ const UserPage = ({ params }: { params: { id: string } }) => {
 
   return (
     <Center>
-      <Box w="full" maxW="md" bg="white" p={6} mt={10} borderRadius="md" boxShadow="md">
+      <Box
+        w="full"
+        maxW="md"
+        bg="white"
+        p={6}
+        mt={10}
+        borderRadius="md"
+        boxShadow="md"
+      >
         <form onSubmit={handleSave}>
           <VStack spacing={4}>
             <Heading size="lg" textAlign="center">
@@ -135,7 +143,9 @@ const UserPage = ({ params }: { params: { id: string } }) => {
               <FormLabel>自己紹介（200文字以内）</FormLabel>
               <Textarea
                 value={user.introduce || ""}
-                onChange={(e) => setUser({ ...user, introduce: e.target.value })}
+                onChange={(e) =>
+                  setUser({ ...user, introduce: e.target.value })
+                }
               />
             </FormControl>
             <Button type="submit" colorScheme="teal">

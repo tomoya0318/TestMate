@@ -21,6 +21,6 @@ export const POST = async (req: Request) => {
 
     return NextResponse.json({ likeCount });
   } catch (err) {
-    return NextResponse.json({ messege: 'Error', err }, { status: 500 });
+    return NextResponse.json({ messege: "Error", err }, { status: 500 });
   }
 };

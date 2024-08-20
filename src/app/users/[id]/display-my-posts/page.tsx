@@ -3,7 +3,15 @@ import React, { useEffect, useState } from "react";
 import { getMyPosts } from "@/api/get-my-posts";
 import { PostProps } from "@/types/post";
 import PostList from "@/components/element/post/post-list";
-import { Container, Flex, Text, Heading ,Box, Link, VStack} from "@chakra-ui/react";
+import {
+  Container,
+  Flex,
+  Text,
+  Heading,
+  Box,
+  Link,
+  VStack,
+} from "@chakra-ui/react";
 
 const DisplayMyPostsPage = ({ params }: { params: { id: string } }) => {
   const [posts, setPosts] = useState<PostProps[]>([]);
@@ -38,7 +46,7 @@ const DisplayMyPostsPage = ({ params }: { params: { id: string } }) => {
     return (
       <Flex justifyContent="center" alignItems="center" height="100vh">
         <VStack>
-        <Box
+          <Box
             sx={{
               fontSize: "40px",
               color: "#000000",
@@ -51,13 +59,14 @@ const DisplayMyPostsPage = ({ params }: { params: { id: string } }) => {
               fontSize: "40px",
               color: "#000000",
             }}
-          >
-          </Box>
-          <Link sx={{
+          ></Box>
+          <Link
+            sx={{
               fontSize: "24px",
               color: "#0DCEDA",
             }}
-            href="/post/new">
+            href="/post/new"
+          >
             アプリを投稿しにいく
           </Link>
         </VStack>

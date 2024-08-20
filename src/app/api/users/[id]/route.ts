@@ -46,6 +46,6 @@ export const PUT = async (req: Request) => {
 
     return NextResponse.json(users);
   } catch (err) {
-    return NextResponse.json({ messege: 'Error', err }, { status: 500 });
+    return NextResponse.json({ messege: "Error", err }, { status: 500 });
   }
 };

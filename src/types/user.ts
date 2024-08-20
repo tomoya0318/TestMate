@@ -8,5 +8,4 @@ export type UserProps = {
   email: string;
   image?: string;
   introduce?: string;
-}
-
+};

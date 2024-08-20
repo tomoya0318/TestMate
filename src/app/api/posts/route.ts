@@ -5,7 +5,7 @@ import { DisplayPost } from "@/types/posts";
 //ポストの全記事取得
 export const GET = async (req: NextRequest) => {
   try {
-    const params = req.nextUrl.searchParams
+    const params = req.nextUrl.searchParams;
     const app_type = params.get("app_type") || undefined;
     const category = params.get("category") || undefined;
     const public_status = params.get("public_status") || undefined;
@@ -22,20 +22,22 @@ export const GET = async (req: NextRequest) => {
           },
         },
       },
-      include:{
+      include: {
         likes: true,
         comments: true,
         testers: true,
-      }
+      },
     });
-    const filteredPosts: DisplayPost[] = posts.map(({likes, comments, testers, ...post}) => {
-      return {
-        ...post,
-        likes: likes.filter(like => like.postId === post.id),
-        comments: comments.filter(comment => comment.postId === post.id),
-        testers: testers.filter(tester => tester.postId === post.id)
-      }
-    })
+    const filteredPosts: DisplayPost[] = posts.map(
+      ({ likes, comments, testers, ...post }) => {
+        return {
+          ...post,
+          likes: likes.filter((like) => like.postId === post.id),
+          comments: comments.filter((comment) => comment.postId === post.id),
+          testers: testers.filter((tester) => tester.postId === post.id),
+        };
+      },
+    );
     return NextResponse.json(filteredPosts);
   } catch (err) {
     console.error("Error getting post:", err);

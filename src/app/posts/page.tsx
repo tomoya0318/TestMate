@@ -1,14 +1,8 @@
 "use client";
 import { getPosts } from "@/api/get-posts";
 import { DisplayPost } from "@/types/posts";
-import { APP_TYPE, CATEGORIES, PUBLIC_STATUS} from "@/constants/index";
-import {
-  Container,
-  HStack,
-  Select,
-  Button,
-  VStack,
-} from "@chakra-ui/react";
+import { APP_TYPE, CATEGORIES, PUBLIC_STATUS } from "@/constants/index";
+import { Container, HStack, Select, Button, VStack } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import PostList from "./_components/post-list";
 
@@ -33,7 +27,11 @@ const Postpage = () => {
 
   const handleSearch = async () => {
     try {
-      const postsData: DisplayPost[] = await getPosts(appType, category, status);
+      const postsData: DisplayPost[] = await getPosts(
+        appType,
+        category,
+        status,
+      );
       setPosts(postsData);
     } catch (error) {
       console.error("Failed to search posts:", error);

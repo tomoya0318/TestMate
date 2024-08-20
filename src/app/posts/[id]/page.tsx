@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { getSinglePost } from "@/api/get-single-post";
 import { getCommentsAndUserByPostId } from "@/api/get-commnets-and-user-by-postId";
 import {

@@ -3,7 +3,15 @@ import React, { useEffect, useState } from "react";
 import { getlikedPost } from "@/api/get-liked-posts";
 import { PostProps } from "@/types/post";
 import PostList from "@/components/element/post/post-list";
-import { Container, Flex, Text, Heading, Link, Box, VStack } from "@chakra-ui/react"; // Import the missing 'Link' and 'Box' components
+import {
+  Container,
+  Flex,
+  Text,
+  Heading,
+  Link,
+  Box,
+  VStack,
+} from "@chakra-ui/react"; // Import the missing 'Link' and 'Box' components
 
 const DisplayLikedPostsPage = ({ params }: { params: { id: string } }) => {
   const [posts, setPosts] = useState<PostProps[]>([]);
@@ -51,8 +59,7 @@ const DisplayLikedPostsPage = ({ params }: { params: { id: string } }) => {
               fontSize: "40px",
               color: "#000000",
             }}
-          >
-          </Box>
+          ></Box>
           <Link
             sx={{
               fontSize: "24px",
