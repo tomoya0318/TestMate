@@ -13,14 +13,18 @@ export const RootLayout: React.FC<LayoutProps> = ({ children }) => {
     <>
       <html lang="ja">
         <body>
-          <Flex direction="column" flex="1" minHeight="100vh"> {/* minHeightを追加 */}
+          <Flex direction="column" flex="1" minHeight="100vh">
+            {" "}
+            {/* minHeightを追加 */}
             <SessionProvider>
               <ChakraProvider>
                 <Header />
-                <div style={{ flex: "1" }}> {/* flex="1" を適用 */}
+                <div style={{ flex: "1" }}>
+                  {" "}
+                  {/* flex="1" を適用 */}
                   {children}
                 </div>
-                <Footer/>
+                <Footer />
               </ChakraProvider>
             </SessionProvider>
           </Flex>

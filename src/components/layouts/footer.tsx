@@ -4,7 +4,7 @@ import { auth } from "@/libs/auth";
 const Footer = async () => {
   const session = await auth();
   return (
-    <Box as="footer" w="100%" bg="gray.100" p={4} boxShadow="md"  mt={10}>
+    <Box as="footer" w="100%" bg="gray.100" p={4} boxShadow="md" mt={10}>
       <Center>
         <Text
           style={{

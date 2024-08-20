@@ -47,6 +47,7 @@ model Account {
 
 model Post {
   id             String       @id @default(cuid())
+  userId         String
   title          String
   short          String
   description    String
@@ -56,7 +57,6 @@ model Post {
   storeUrl       String       @map("store_url")
   createdAt      DateTime     @map("created_at") @default(now())
   updatedAt      DateTime     @map("updated_at") @updatedAt
-  userId         String
   user           User     @relation(fields: [userId], references: [id])
   likes          Like[]
   tags           PostTag[]
@@ -68,41 +68,41 @@ model Post {
 
 model Session {
   id           String   @id @default(cuid())
+  userId       String   @map("user_id")
   sessionToken String   @unique
-  userId       String
   expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt    DateTime @map("created_at") @default(now())
   updatedAt    DateTime @map("updated_at") @updatedAt
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   @@map("sessions")
 }
 
 model Like {
-  user      User       @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   userId    String     @map("user_id") 
-  post      Post       @relation(fields: [postId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   postId    String     @map("post_id") 
   createdAt DateTime   @map("created_at") @default(now())
   updatedAt DateTime   @map("updated_at") @updatedAt
+  user      User       @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  post      Post       @relation(fields: [postId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   @@id([userId, postId])
   @@map("likes")
 }
 
 model Tag {
-  id          String      @id @default(cuid())
-  posts       PostTag[]
-  appType     String      
-  category    String   
-  status      String    
+  id            String     @id @default(cuid())
+  appType       String     @map("app_type")  
+  category      String
+  publicStatus  String     @map("public_status")
+  posts         PostTag[]
   @@map("tags")  
 }
 
 
 model PostTag {
-  post   Post  @relation(fields: [postId], references: [id])
-  postId String
-  tag    Tag   @relation(fields: [tagId], references: [id])
-  tagId  String
+  postId String @map("post_id")
+  tagId  String @map("tag_id")
+  post   Post   @relation(fields: [postId], references: [id])
+  tag    Tag    @relation(fields: [tagId], references: [id])
 
   @@id([postId, tagId])
   @@map("posts_tags")
@@ -110,12 +110,12 @@ model PostTag {
 
 model Comment {
   id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  postId    String   @map("post_id")
   content   String
-  createdAt DateTime @default(now())
-  postId    String
-  userId    String
-  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  createdAt DateTime @map("created_at")  @default(now())
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   @@index([postId])
   @@index([userId])
   @@map("comments")
@@ -123,10 +123,10 @@ model Comment {
 
 model Tester {
   id String          @id @default(cuid())
-  postId    String   @map("post_id")
   userId    String   @map("user_id")
-  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    String   @map("post_id")
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   @@index([postId])
   @@index([userId])
   @@map("testers")

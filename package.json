@@ -9,6 +9,7 @@
     "format": "prettier --write src/",
     "migrate": "prisma migrate dev",
     "db:reset": "prisma migrate reset",
+    "db:seed": "ts-node ./prisma/seed.ts",
     "postinstall": "prisma generate",
     "build": "prisma generate && next build"
   },
@@ -40,7 +41,7 @@
   "devDependencies": {
     "@types/file-saver": "^2",
     "@types/jquery": "^3",
-    "@types/node": "^20",
+    "@types/node": "^22.3.0",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/react-slick": "^0",
@@ -49,7 +50,11 @@
     "eslint-config-next": "14.2.4",
     "prettier": "^3.3.2",
     "prisma": "^5.18.0",
-    "typescript": "^5"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   },
   "packageManager": "yarn@4.3.1"
 }

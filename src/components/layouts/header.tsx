@@ -1,4 +1,12 @@
-import { Box, HStack, Avatar, Button, Text, Image, Flex } from "@chakra-ui/react";
+import {
+  Box,
+  HStack,
+  Avatar,
+  Button,
+  Text,
+  Image,
+  Flex,
+} from "@chakra-ui/react";
 import Link from "next/link";
 import { SignIn } from "@/components/element/button/auth-button";
 import { auth } from "@/libs/auth";
@@ -10,7 +18,13 @@ const Header = async () => {
   return (
     <Box w="100%" bg="gray.100" p={4} boxShadow="md">
       <Flex justifyContent="center" alignItems="center">
-        <Flex w="100%" maxW="1200px" px={4} justifyContent="space-between" alignItems="center">
+        <Flex
+          w="100%"
+          maxW="1200px"
+          px={4}
+          justifyContent="space-between"
+          alignItems="center"
+        >
           <HStack spacing={4} alignItems="center">
             <Image src="/headerIcon.png" alt="Logo" boxSize="60px" />
             <Link href="/">
@@ -25,7 +39,7 @@ const Header = async () => {
             </Link>
           </HStack>
           <HStack spacing={4} alignItems="center">
-            <Link href="/post/new">
+            <Link href="/posts/submit">
               <Button
                 bg="#0DCEDA"
                 color="white"
