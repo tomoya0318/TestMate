@@ -4,8 +4,8 @@ export interface DisplayPost extends Post {
   likes: Like[];
   comments: Comment[];
   testers: Tester[];
-};
+}
 
-export interface CreatePost extends Omit<Post, 'id'>　{
-  tag: Omit<Tag, "id">;
-};
+export interface CreatePost
+  extends Omit<Post, "id" | "createdAt" | "updatedAt">,
+    Omit<Tag, "id"> {}

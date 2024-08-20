@@ -5,16 +5,25 @@ import { prisma } from "@/libs/server";
 export const POST = async (req: Request) => {
   try {
     const data = await req.json();
-    
-    const {tag, ...postData} = data;
+
+    const { appType, category, publicStatus, ...postData } = data;
     // 必要なフィールドが存在しない場合に400エラーを返す
-    const requiredPosts = ['title', 'userId', 'short', 'description', 'iconUrl', 'screenshots', 'groupUrl', 'storeUrl'];
-    const requiredTags = ["appType", "category", "publicStatus"];
+    const requiredPosts = [
+      "userId",
+      "title",
+      "short",
+      "description",
+      "iconUrl",
+      "screenshots",
+      "groupUrl",
+      "storeUrl",
+    ];
 
-    const isMissingPosts = requiredPosts.some(field => !postData[field] || postData[field] === '');
-    const isMissingTags = requiredTags.some(field => !tag[field] || tag[field] === '');
+    const isMissingPosts = requiredPosts.some(
+      (field) => !postData[field] || postData[field] === "",
+    );
 
-    if (isMissingPosts || isMissingTags) {
+    if (isMissingPosts || !appType || !category || !publicStatus) {
       return NextResponse.json({ message: "Missing fields" }, { status: 400 });
     }
 
@@ -27,7 +36,9 @@ export const POST = async (req: Request) => {
             create: {
               tag: {
                 create: {
-                  ...tag,
+                  appType,
+                  category,
+                  publicStatus,
                 },
               },
             },
@@ -35,10 +46,10 @@ export const POST = async (req: Request) => {
         },
       });
     });
-    
+
     return NextResponse.json(post.id);
   } catch (err) {
     console.error("Error creating post:", err);
-    return NextResponse.json({ message: 'Server Error' }, { status: 500 });
+    return NextResponse.json({ message: "Server Error" }, { status: 500 });
   }
 };
