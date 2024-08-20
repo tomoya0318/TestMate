@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/libs/server";
-import { Post } from "@/types/posts";
+import { DisplayPost } from "@/types/posts";
 
 //ポストの全記事取得
 export const GET = async (req: NextRequest) => {
@@ -28,7 +28,7 @@ export const GET = async (req: NextRequest) => {
         testers: true,
       }
     });
-    const filteredPosts: Post[] = posts.map(({likes, comments, testers, ...post}) => {
+    const filteredPosts: DisplayPost[] = posts.map(({likes, comments, testers, ...post}) => {
       return {
         ...post,
         likes: likes.filter(like => like.postId === post.id),
@@ -38,6 +38,7 @@ export const GET = async (req: NextRequest) => {
     })
     return NextResponse.json(filteredPosts);
   } catch (err) {
-    return NextResponse.json({ messege: "Error", err }, { status: 500 });
+    console.error("Error getting post:", err);
+    return NextResponse.json({ messege: "Sever Error" }, { status: 500 });
   }
 };
