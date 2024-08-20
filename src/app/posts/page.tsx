@@ -1,6 +1,6 @@
 "use client";
 import { getPosts } from "@/api/get-posts";
-import { Post } from "@/types/posts";
+import { DisplayPost } from "@/types/posts";
 import { APP_TYPE, CATEGORIES, PUBLIC_STATUS} from "@/constants/index";
 import {
   Container,
@@ -13,7 +13,7 @@ import { useState, useEffect } from "react";
 import PostList from "./_components/post-list";
 
 const Postpage = () => {
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<DisplayPost[]>([]);
   const [appType, setAppType] = useState<string>("");
   const [category, setCategory] = useState<string>("");
   const [status, setStatus] = useState<string>("");
@@ -21,7 +21,7 @@ const Postpage = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const allPosts: Post[] = await getPosts();
+        const allPosts: DisplayPost[] = await getPosts();
         setPosts(allPosts);
       } catch (error) {
         console.error("Failed to fetch posts:", error);
@@ -33,13 +33,13 @@ const Postpage = () => {
 
   const handleSearch = async () => {
     try {
-      const postsData: Post[] = await getPosts(appType, category, status);
+      const postsData: DisplayPost[] = await getPosts(appType, category, status);
       setPosts(postsData);
     } catch (error) {
       console.error("Failed to search posts:", error);
     }
   };
-  
+
   return (
     <Container mt={1} p={10}>
       <VStack align="stretch" spacing={4}>
