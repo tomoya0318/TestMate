@@ -183,7 +183,6 @@ const PostNewPage: React.FC = () => {
                 <FormLabel>カテゴリ</FormLabel>
                 <SelectBox
                   placeholder="カテゴリ"
-                  state={category}
                   setState={setCategory}
                   selects={CATEGORIES}
                 />

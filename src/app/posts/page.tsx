@@ -45,18 +45,15 @@ const Postpage = () => {
         <HStack>
           <SelectBox
             placeholder="ゲーム/アプリ"
-            state={appType}
             setState={setAppType}
             selects={APP_TYPE}
           />
           <SelectBox
             placeholder="カテゴリ"
-            state={category}
             setState={setCategory}
             selects={CATEGORIES}/>
           <SelectBox
             placeholder="テスト中/リリース済み"
-            state={publicStatus}
             setState={setPublicStatus}
             selects={PUBLIC_STATUS}/>
           <Button onClick={handleSearch} colorScheme="teal" size="lg">
