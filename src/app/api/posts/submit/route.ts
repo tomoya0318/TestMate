@@ -1,36 +1,44 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/libs/server";
-import { CreatePost } from "@/types/posts";
 
 // POST新規作成用API
 export const POST = async (req: Request) => {
   try {
-    const data: CreatePost = await req.json();
+    const data = await req.json();
     
-    const isMissingFields = Object.values(data).some(value => value === undefined || value === null || value === '');
-    if (isMissingFields) {
+    const {tag, ...postData} = data;
+    // 必要なフィールドが存在しない場合に400エラーを返す
+    const requiredPosts = ['title', 'userId', 'short', 'description', 'iconUrl', 'screenshots', 'groupUrl', 'storeUrl'];
+    const requiredTags = ["appType", "category", "publicStatus"];
+
+    const isMissingPosts = requiredPosts.some(field => !postData[field] || postData[field] === '');
+    const isMissingTags = requiredTags.some(field => !tag[field] || tag[field] === '');
+
+    if (isMissingPosts || isMissingTags) {
       return NextResponse.json({ message: "Missing fields" }, { status: 400 });
     }
-    const {tag, ...postData} = data;
 
-    const post = await prisma.post.create({
-      data: {
-        ...postData,
-        tags: {
-          create: {
-            tag: {
-              create: {
-                ...tag,
+    // トランザクションを使用
+    const post = await prisma.$transaction(async (tx) => {
+      return await tx.post.create({
+        data: {
+          ...postData,
+          tags: {
+            create: {
+              tag: {
+                create: {
+                  ...tag,
+                },
               },
             },
           },
         },
-      },
+      });
     });
     
     return NextResponse.json(post.id);
   } catch (err) {
-    console.error("Error creating post with tags:", err);
-    return NextResponse.json({ messege: 'Error', err }, { status: 500 });
+    console.error("Error creating post:", err);
+    return NextResponse.json({ message: 'Server Error' }, { status: 500 });
   }
 };
