@@ -6,6 +6,7 @@ import {
   Checkbox,
   FormErrorMessage,
 } from "@chakra-ui/react";
+
 interface CheckBoxProps {
   label: string;
   error?: string;
@@ -13,7 +14,7 @@ interface CheckBoxProps {
   setState: (state: string) => void;
   selects: string[];
 }
-export const SelectBox: React.FC<CheckBoxProps> = ({
+export const CheckBox: React.FC<CheckBoxProps> = ({
   label,
   error,
   state,

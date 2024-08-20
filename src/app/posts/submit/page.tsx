@@ -21,8 +21,9 @@ import {
 import { ImageUploadButton } from "@/components/element/button/image-upload-button";
 import { InputField } from "./_components/input-field";
 import { TextareaField } from "./_components/textarea-field";
-import { SelectBox } from "./_components/select-box";
+import { CheckBox } from "./_components/check-box";
 import { CreatePost } from "@/types/posts";
+import { SelectBox } from "@/components/element/select-box";
 
 const PostNewPage: React.FC = () => {
   const router = useRouter();
@@ -171,7 +172,7 @@ const PostNewPage: React.FC = () => {
                   <FormErrorMessage>{errors.screenshots}</FormErrorMessage>
                 )}
               </FormControl>
-              <SelectBox
+              <CheckBox
                 label="アプリ種別"
                 error={errors.appType}
                 state={appType}
@@ -180,23 +181,17 @@ const PostNewPage: React.FC = () => {
               />
               <FormControl isInvalid={!!errors.category}>
                 <FormLabel>カテゴリ</FormLabel>
-                <Select
-                  placeholder="選択してください"
-                  onChange={(e) => setCategory(e.target.value)}
-                  bg="white"
-                  size="lg"
-                >
-                  {CATEGORIES.map((category) => (
-                    <option key={category} value={category}>
-                      {category}
-                    </option>
-                  ))}
-                </Select>
+                <SelectBox
+                  placeholder="カテゴリ"
+                  state={category}
+                  setState={setCategory}
+                  selects={CATEGORIES}
+                />
                 {errors.category && (
                   <FormErrorMessage>{errors.category}</FormErrorMessage>
                 )}
               </FormControl>
-              <SelectBox
+              <CheckBox
                 label="公開状況"
                 error={errors.publicStatus}
                 state={publicStatus}

@@ -5,12 +5,13 @@ import { APP_TYPE, CATEGORIES, PUBLIC_STATUS } from "@/constants/index";
 import { Container, HStack, Select, Button, VStack } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import PostList from "./_components/post-list";
+import { SelectBox } from "@/components/element/select-box";
 
 const Postpage = () => {
   const [posts, setPosts] = useState<DisplayPost[]>([]);
   const [appType, setAppType] = useState<string>("");
   const [category, setCategory] = useState<string>("");
-  const [status, setStatus] = useState<string>("");
+  const [publicStatus, setPublicStatus] = useState<string>("");
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -30,7 +31,7 @@ const Postpage = () => {
       const postsData: DisplayPost[] = await getPosts(
         appType,
         category,
-        status,
+        publicStatus,
       );
       setPosts(postsData);
     } catch (error) {
@@ -42,42 +43,22 @@ const Postpage = () => {
     <Container mt={1} p={10}>
       <VStack align="stretch" spacing={4}>
         <HStack>
-          <Select
+          <SelectBox
             placeholder="ゲーム/アプリ"
-            onChange={(e) => setAppType(e.target.value)}
-            bg="white"
-            size="lg"
-          >
-            {APP_TYPE.map((type) => (
-              <option key={type} value={type}>
-                {type}
-              </option>
-            ))}
-          </Select>
-          <Select
+            state={appType}
+            setState={setAppType}
+            selects={APP_TYPE}
+          />
+          <SelectBox
             placeholder="カテゴリ"
-            onChange={(e) => setCategory(e.target.value)}
-            bg="white"
-            size="lg"
-          >
-            {CATEGORIES.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
-          </Select>
-          <Select
+            state={category}
+            setState={setCategory}
+            selects={CATEGORIES}/>
+          <SelectBox
             placeholder="テスト中/リリース済み"
-            onChange={(e) => setStatus(e.target.value)}
-            bg="white"
-            size="lg"
-          >
-            {PUBLIC_STATUS.map((status) => (
-              <option key={status} value={status}>
-                {status}
-              </option>
-            ))}
-          </Select>
+            state={publicStatus}
+            setState={setPublicStatus}
+            selects={PUBLIC_STATUS}/>
           <Button onClick={handleSearch} colorScheme="teal" size="lg">
             検索
           </Button>
